@@ -4,6 +4,8 @@ import clsx from "clsx";
 import { GiMineExplosion } from "react-icons/all";
 import "./style.scss";
 
+let dev = false;
+
 interface BlockState {
   x: number;
   y: number;
@@ -17,10 +19,19 @@ const WIDTH = 10;
 const HEIGHT = 10;
 
 // 生成炸弹
-function generateMines(state: BlockState[][]) {
+function generateMines(
+  state: BlockState[][],
+  initial: { y: number; x: number }
+) {
   const newState = produce(state, (draft) => {
     for (const rows of draft) {
       for (const block of rows) {
+        if (Math.abs(initial.x - block.x) < 1) {
+          continue;
+        }
+        if (Math.abs(initial.y - block.y) < 1) {
+          continue;
+        }
         block.mine = Math.random() < 0.1;
       }
     }
@@ -43,11 +54,8 @@ function updateNumber(state: BlockState[][]) {
     draft.forEach((rows, y) => {
       rows.forEach((block, x) => {
         if (block.mine) return;
-        directions.forEach(([dx, dy]) => {
-          const x2 = block.x + dx;
-          const y2 = block.y + dy;
-          if (x2 < 0 || x2 >= WIDTH || y2 < 0 || y2 >= HEIGHT) return;
-          if (draft[y2][x2].mine) {
+        getSiblings(block, draft).forEach((otherMine) => {
+          if (otherMine.mine) {
             block.adjacentMines++;
           }
         });
@@ -58,19 +66,15 @@ function updateNumber(state: BlockState[][]) {
 }
 // 初始化 state
 function initState() {
-  return updateNumber(
-    generateMines(
-      Array.from({ length: WIDTH }, (_, y) =>
-        Array.from(
-          { length: HEIGHT },
-          (_, x): BlockState => ({
-            x,
-            y,
-            adjacentMines: 0,
-            revealed: false,
-          })
-        )
-      )
+  return Array.from({ length: WIDTH }, (_, y) =>
+    Array.from(
+      { length: HEIGHT },
+      (_, x): BlockState => ({
+        x,
+        y,
+        adjacentMines: 0,
+        revealed: false,
+      })
     )
   );
 }
@@ -100,15 +104,49 @@ function getBlockStyle(item: BlockState) {
   };
 }
 
+let mineGenerated = false;
+
+// 获取每个格子周围的 格子数组
+function getSiblings(block: BlockState, state: BlockState[][]) {
+  return directions
+    .map(([dx, dy]) => {
+      const x2 = block.x + dx;
+      const y2 = block.y + dy;
+      if (x2 < 0 || x2 >= WIDTH || y2 < 0 || y2 >= HEIGHT) return;
+      return state[y2][x2];
+    })
+    .filter(Boolean) as BlockState[];
+}
+
+function expendZero(block: BlockState, state: BlockState[][]) {
+  if (block.adjacentMines) return;
+  getSiblings(block, state).forEach((otherBlock) => {
+    if (!otherBlock.revealed) {
+      otherBlock.revealed = true;
+      expendZero(otherBlock, state);
+    }
+  });
+}
+
 function App() {
   // 初始化 data
   const [state, setState] = useState(initState);
-
   // 点击
   const onClick = (y: number, x: number) => {
-    setState(
-      produce((draft) => {
+    if (!mineGenerated) {
+      setState(
+        produce((draft) => updateNumber(generateMines(draft, { y, x })))
+      );
+      mineGenerated = true;
+    }
+    setState((state) =>
+      produce(state, (draft) => {
+        if (!mineGenerated) {
+          draft = updateNumber(generateMines(draft, { y, x }));
+          mineGenerated = true;
+        }
         draft[y][x].revealed = true;
+        expendZero(draft[y][x], draft);
       })
     );
   };
@@ -125,8 +163,8 @@ function App() {
                 style={!item.mine ? getBlockStyle(item) : {}}
               >
                 {item.mine
-                  ? item.revealed && <GiMineExplosion />
-                  : item.revealed && item.adjacentMines}
+                  ? (item.revealed || dev) && <GiMineExplosion />
+                  : (item.revealed || dev) && item.adjacentMines}
               </button>
             ))}
           </div>
