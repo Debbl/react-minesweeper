@@ -1,5 +1,5 @@
 import { useState } from "react";
-import lodash from "lodash";
+import produce from "immer";
 import clsx from "clsx";
 import { GiMineExplosion } from "react-icons/all";
 import "./style.scss";
@@ -18,12 +18,13 @@ const HEIGHT = 10;
 
 // 生成炸弹
 function generateMines(state: BlockState[][]) {
-  const newState = lodash.cloneDeep(state);
-  for (const rows of newState) {
-    for (const block of rows) {
-      block.mine = Math.random() < 0.1;
+  const newState = produce(state, (draft) => {
+    for (const rows of draft) {
+      for (const block of rows) {
+        block.mine = Math.random() < 0.1;
+      }
     }
-  }
+  });
   return newState;
 }
 // 更新每个格子周围的炸弹
@@ -38,17 +39,18 @@ const directions = [
   [1, 1],
 ];
 function updateNumber(state: BlockState[][]) {
-  const newState = lodash.cloneDeep(state);
-  newState.forEach((rows, y) => {
-    rows.forEach((block, x) => {
-      if (block.mine) return;
-      directions.forEach(([dx, dy]) => {
-        const x2 = block.x + dx;
-        const y2 = block.y + dy;
-        if (x2 < 0 || x2 >= WIDTH || y2 < 0 || y2 >= HEIGHT) return;
-        if (newState[y2][x2].mine) {
-          block.adjacentMines++;
-        }
+  const newState = produce(state, (draft) => {
+    draft.forEach((rows, y) => {
+      rows.forEach((block, x) => {
+        if (block.mine) return;
+        directions.forEach(([dx, dy]) => {
+          const x2 = block.x + dx;
+          const y2 = block.y + dy;
+          if (x2 < 0 || x2 >= WIDTH || y2 < 0 || y2 >= HEIGHT) return;
+          if (draft[y2][x2].mine) {
+            block.adjacentMines++;
+          }
+        });
       });
     });
   });
@@ -92,11 +94,10 @@ const numberColors = [
 ];
 function getBlockStyle(item: BlockState) {
   if (!item.revealed) return {};
-  const classObj = {
+  return {
     color: numberColors[item.adjacentMines],
     border: "1px solid rgba(156,163,175,0.1)",
   };
-  return classObj;
 }
 
 function App() {
@@ -105,9 +106,11 @@ function App() {
 
   // 点击
   const onClick = (y: number, x: number) => {
-    const newState = lodash.cloneDeep(state);
-    newState[y][x].revealed = true;
-    setState(newState);
+    setState(
+      produce((draft) => {
+        draft[y][x].revealed = true;
+      })
+    );
   };
   return (
     <div className="app">

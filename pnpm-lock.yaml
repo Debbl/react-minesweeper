@@ -6,6 +6,8 @@ specifiers:
   '@types/react-dom': ^18.0.6
   '@vitejs/plugin-react': ^2.1.0
   clsx: ^1.2.1
+  i: ^0.3.7
+  immer: ^9.0.15
   lodash: ^4.17.21
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -17,6 +19,8 @@ specifiers:
 dependencies:
   '@types/lodash': 4.14.185
   clsx: 1.2.1
+  i: 0.3.7
+  immer: 9.0.15
   lodash: 4.17.21
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -763,6 +767,15 @@ packages:
     dependencies:
       function-bind: 1.1.1
     dev: true
+
+  /i/0.3.7:
+    resolution: {integrity: sha512-FYz4wlXgkQwIPqhzC5TdNMLSE5+GS1IIDJZY/1ZiEPCT2S3COUVZeT5OW4BmW4r5LHLQuOosSwsvnroG9GR59Q==}
+    engines: {node: '>=0.4'}
+    dev: false
+
+  /immer/9.0.15:
+    resolution: {integrity: sha512-2eB/sswms9AEUSkOm4SbV5Y7Vmt/bKRwByd52jfLkW4OLYeaTP3EEiJ9agqU0O/tq6Dk62Zfj+TJSqfm1rLVGQ==}
+    dev: false
 
   /immutable/4.1.0:
     resolution: {integrity: sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==}
