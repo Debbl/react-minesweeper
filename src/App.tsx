@@ -2,6 +2,8 @@ import { useState } from "react";
 import lodash from "lodash";
 import clsx from "clsx";
 import { GiMineExplosion } from "react-icons/all";
+import "./style.scss";
+
 interface BlockState {
   x: number;
   y: number;
@@ -90,10 +92,11 @@ const numberColors = [
 ];
 function getBlockStyle(item: BlockState) {
   if (!item.revealed) return {};
-  return {
+  const classObj = {
     color: numberColors[item.adjacentMines],
     border: "1px solid rgba(156,163,175,0.1)",
   };
+  return classObj;
 }
 
 function App() {
@@ -113,6 +116,7 @@ function App() {
           <div key={y} className="rows">
             {rows.map((item, x) => (
               <button
+                key={x}
                 className={clsx(getBlockClass(item))}
                 onClick={() => onClick(item.y, item.x)}
                 style={!item.mine ? getBlockStyle(item) : {}}

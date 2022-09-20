@@ -1,18 +1,13 @@
 .app {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background-color: #eee;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  // background-color: rgba(18, 18, 18, 1);
   .container {
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
     .rows {
       display: flex;
     }
@@ -20,13 +15,14 @@
       margin: 1px;
       width: 30px;
       height: 30px;
+      border-style: none;
+      background-color: transparent;
       &:hover {
-        background-color: rgb(0, 0, 0, 0.3);
+        background-color: rgba(107, 114, 128, 0.2);
       }
       &.active-mine {
         color: red;
         background-color: rgba(255, 0, 0, 0.5);
-        border: 1px solid rgba(156, 163, 175, 0.1);
       }
     }
     .unrevealed-mine {
