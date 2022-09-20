@@ -1,10 +1,11 @@
+import { MouseEvent, useEffect } from "react";
 import { useState } from "react";
 import produce from "immer";
 import clsx from "clsx";
-import { GiMineExplosion } from "react-icons/all";
+import { GiMineExplosion, RiFlagFill } from "react-icons/all";
 import "./style.scss";
 
-let dev = false;
+let dev = true;
 
 interface BlockState {
   x: number;
@@ -15,8 +16,8 @@ interface BlockState {
   adjacentMines: number;
 }
 
-const WIDTH = 10;
-const HEIGHT = 10;
+const WIDTH = 5;
+const HEIGHT = 5;
 
 // 生成炸弹
 function generateMines(
@@ -32,7 +33,7 @@ function generateMines(
         if (Math.abs(initial.y - block.y) < 1) {
           continue;
         }
-        block.mine = Math.random() < 0.1;
+        block.mine = Math.random() < 0.3;
       }
     }
   });
@@ -128,11 +129,25 @@ function expendZero(block: BlockState, state: BlockState[][]) {
   });
 }
 
+function checkGateState(state: BlockState[][]) {
+  const blocks = state.flat();
+  if (blocks.every((block) => block.revealed || block.flagged)) {
+    if (blocks.every((block) => block.flagged && block.mine)) {
+      alert("You win!");
+    } else {
+      alert("cheat");
+    }
+  }
+}
+
 function App() {
   // 初始化 data
   const [state, setState] = useState(initState);
   // 点击
   const onClick = (y: number, x: number) => {
+    if (state[y][x].mine) {
+      alert("BOOM!");
+    }
     if (!mineGenerated) {
       setState(
         produce((draft) => updateNumber(generateMines(draft, { y, x })))
@@ -147,6 +162,17 @@ function App() {
         }
         draft[y][x].revealed = true;
         expendZero(draft[y][x], draft);
+        checkGateState(draft);
+      })
+    );
+  };
+  // 右键菜单
+  const onContextMenu = (e: MouseEvent, { y, x }: { y: number; x: number }) => {
+    e.preventDefault();
+    setState(
+      produce(state, (draft) => {
+        draft[y][x].flagged = !draft[y][x].flagged;
+        checkGateState(draft);
       })
     );
   };
@@ -160,11 +186,16 @@ function App() {
                 key={x}
                 className={clsx(getBlockClass(item))}
                 onClick={() => onClick(item.y, item.x)}
+                onContextMenu={(e) => onContextMenu(e, { y, x })}
                 style={!item.mine ? getBlockStyle(item) : {}}
               >
-                {item.mine
-                  ? (item.revealed || dev) && <GiMineExplosion />
-                  : (item.revealed || dev) && item.adjacentMines}
+                {item.flagged ? (
+                  <RiFlagFill style={{ color: "red" }} />
+                ) : item.mine ? (
+                  (item.revealed || dev) && <GiMineExplosion />
+                ) : (
+                  (item.revealed || dev) && item.adjacentMines
+                )}
               </button>
             ))}
           </div>
