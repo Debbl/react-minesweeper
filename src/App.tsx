@@ -129,13 +129,16 @@ function expendZero(block: BlockState, state: BlockState[][]) {
   });
 }
 
-function checkGateState(state: BlockState[][]) {
+function checkGameState(state: BlockState[][]) {
   const blocks = state.flat();
   if (blocks.every((block) => block.revealed || block.flagged)) {
-    if (blocks.every((block) => block.flagged && block.mine)) {
+    if (
+      blocks.every(
+        (block) =>
+          (block.revealed && !block.mine) || (block.flagged && block.mine)
+      )
+    ) {
       alert("You win!");
-    } else {
-      alert("cheat");
     }
   }
 }
@@ -143,10 +146,24 @@ function checkGateState(state: BlockState[][]) {
 function App() {
   // 初始化 data
   const [state, setState] = useState(initState);
+  useEffect(() => {
+    checkGameState(state);
+  });
   // 点击
   const onClick = (y: number, x: number) => {
+    if (state[y][x].flagged) return;
     if (state[y][x].mine) {
       alert("BOOM!");
+      setState(
+        produce(state, (draft) => {
+          for (const rows of draft) {
+            for (const item of rows) {
+              item.revealed = true;
+            }
+          }
+        })
+      );
+      return;
     }
     if (!mineGenerated) {
       setState(
@@ -162,7 +179,6 @@ function App() {
         }
         draft[y][x].revealed = true;
         expendZero(draft[y][x], draft);
-        checkGateState(draft);
       })
     );
   };
@@ -172,7 +188,6 @@ function App() {
     setState(
       produce(state, (draft) => {
         draft[y][x].flagged = !draft[y][x].flagged;
-        checkGateState(draft);
       })
     );
   };
