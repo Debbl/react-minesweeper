@@ -26,5 +26,5 @@ jobs:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           external_repository: Debbl/game.aiwan.run
           publish_branch: main
-          publish_dir: ./dist
+          publish_dir: dist
           destination_dir: minesweeper
