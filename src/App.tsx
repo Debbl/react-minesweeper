@@ -122,7 +122,7 @@ function getSiblings(block: BlockState, state: BlockState[][]) {
 function expendZero(block: BlockState, state: BlockState[][]) {
   if (block.adjacentMines) return;
   getSiblings(block, state).forEach((otherBlock) => {
-    if (!otherBlock.revealed) {
+    if (!otherBlock.revealed && !otherBlock.flagged) {
       otherBlock.revealed = true;
       expendZero(otherBlock, state);
     }
@@ -187,7 +187,9 @@ function App() {
     e.preventDefault();
     setState(
       produce(state, (draft) => {
-        draft[y][x].flagged = !draft[y][x].flagged;
+        if (!draft[y][x].revealed) {
+          draft[y][x].flagged = !draft[y][x].flagged;
+        }
       })
     );
   };
