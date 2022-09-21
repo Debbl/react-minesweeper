@@ -22,5 +22,6 @@ module.exports = {
     "prettier/prettier": "warn",
     "react/react-in-jsx-scope": "off",
     "prefer-const": "warn",
+    "tailwindcss/no-custom-classname": "off",
   },
 };

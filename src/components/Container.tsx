@@ -195,7 +195,7 @@ function Container() {
   };
   return (
     <div className="app">
-      <div className="font-medium mb-5">扫雷</div>
+      <div className="mb-5 font-medium">扫雷</div>
       <div className="container">
         {state.map((rows, y) => (
           <div key={y} className="rows">
