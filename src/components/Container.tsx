@@ -1,10 +1,9 @@
 import type { BlockState } from "@/types";
-import { MouseEvent, useEffect } from "react";
+import { MouseEvent, useContext, useEffect } from "react";
 import { useState } from "react";
 import produce from "immer";
-import { GiMineExplosion, RiFlagFill } from "react-icons/all";
-
-const dev = false;
+import Block from "./Block";
+import MainContext from "@/contexts/MainContext";
 
 const WIDTH = 5;
 const HEIGHT = 5;
@@ -70,19 +69,6 @@ function initState() {
   );
 }
 
-// 数字的样式
-const numberColors = [
-  "text-transparent",
-  "text-blue-500",
-  "text-green-500",
-  "text-yellow-500",
-  "text-orange-500",
-  "text-red-500",
-  "text-purple-500",
-  "text-pink-500",
-  "text-teal-500",
-];
-
 let mineGenerated = false;
 
 // 获取每个格子周围的 格子数组
@@ -120,21 +106,16 @@ function checkGameState(state: BlockState[][]) {
   }
 }
 
-// 格子的样式
-function getBlockClassName(block: BlockState) {
-  if (block.flagged) return "bg-gray-500/10";
-  if (!block.revealed) return "bg-gray-500/10 hover:bg-gray-500/30";
-  return block.mine ? "bg-red-500/50" : numberColors[block.adjacentMines];
-}
-
 function Container() {
   // 初始化 data
   const [state, setState] = useState(initState);
+  const { isDev, setIsDev } = useContext(MainContext);
   useEffect(() => {
     checkGameState(state);
   }, [state]);
   // 点击
-  const onClick = (y: number, x: number) => {
+  const onClick = (block: BlockState) => {
+    const { y, x } = block;
     if (state[y][x].flagged) return;
     if (state[y][x].mine) {
       alert("BOOM!");
@@ -159,8 +140,9 @@ function Container() {
     );
   };
   // 右键菜单
-  const onContextMenu = (e: MouseEvent, { y, x }: { y: number; x: number }) => {
+  const onContextMenu = (e: MouseEvent, block: BlockState) => {
     e.preventDefault();
+    const { y, x } = block;
     setState(
       produce(state, (draft) => {
         if (!draft[y][x].revealed) {
@@ -172,27 +154,17 @@ function Container() {
   return (
     <div className="flex flex-col items-center">
       <div className="mb-5 text-2xl font-bold">扫雷</div>
+      <button onClick={() => setIsDev(!isDev)}>{isDev ? "DEV" : "PLAY"}</button>
       <div className="flex flex-col">
         {state.map((rows, y) => (
           <div key={y} className="flex">
             {rows.map((item, x) => (
-              <button
+              <Block
                 key={x}
-                className={
-                  "m-[1px] flex h-11 w-11 items-center justify-center border " +
-                  getBlockClassName(item)
-                }
-                onClick={() => onClick(item.y, item.x)}
-                onContextMenu={(e) => onContextMenu(e, { y, x })}
-              >
-                {item.flagged ? (
-                  <RiFlagFill className="text-red-700" />
-                ) : item.mine ? (
-                  (item.revealed || dev) && <GiMineExplosion />
-                ) : (
-                  (item.revealed || dev) && item.adjacentMines
-                )}
-              </button>
+                block={item}
+                onClick={onClick}
+                onContextMenu={onContextMenu}
+              />
             ))}
           </div>
         ))}
