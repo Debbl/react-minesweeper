@@ -2,7 +2,7 @@ import Container from "./components/Container";
 
 function App() {
   return (
-    <div className="flex h-screen justify-center items-center">
+    <div className="flex h-screen items-center justify-center">
       <Container />
     </div>
   );
