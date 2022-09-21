@@ -23,7 +23,7 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          deploy_key: ${{ secrets.GITHUB_TOKEN }}
           external_repository: Debbl/game.aiwan.run
           publish_branch: main
           publish_dir: ./dist
