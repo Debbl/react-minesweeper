@@ -195,6 +195,7 @@ function App() {
   };
   return (
     <div className="app">
+      <div>扫雷</div>
       <div className="container">
         {state.map((rows, y) => (
           <div key={y} className="rows">
