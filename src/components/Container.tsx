@@ -3,9 +3,9 @@ import { useState } from "react";
 import produce from "immer";
 import clsx from "clsx";
 import { GiMineExplosion, RiFlagFill } from "react-icons/all";
-import "./style.scss";
+// import "./style.scss";
 
-let dev = true;
+const dev = true;
 
 interface BlockState {
   x: number;
@@ -22,7 +22,7 @@ const HEIGHT = 5;
 // 生成炸弹
 function generateMines(
   state: BlockState[][],
-  initial: { y: number; x: number }
+  initial: { y: number; x: number },
 ) {
   const newState = produce(state, (draft) => {
     for (const rows of draft) {
@@ -52,8 +52,8 @@ const directions = [
 ];
 function updateNumber(state: BlockState[][]) {
   const newState = produce(state, (draft) => {
-    draft.forEach((rows, y) => {
-      rows.forEach((block, x) => {
+    draft.forEach((rows) => {
+      rows.forEach((block) => {
         if (block.mine) return;
         getSiblings(block, draft).forEach((otherMine) => {
           if (otherMine.mine) {
@@ -75,8 +75,8 @@ function initState() {
         y,
         adjacentMines: 0,
         revealed: false,
-      })
-    )
+      }),
+    ),
   );
 }
 // 炸弹和按钮的样式
@@ -135,7 +135,7 @@ function checkGameState(state: BlockState[][]) {
     if (
       blocks.every(
         (block) =>
-          (block.revealed && !block.mine) || (block.flagged && block.mine)
+          (block.revealed && !block.mine) || (block.flagged && block.mine),
       )
     ) {
       alert("You win!");
@@ -161,13 +161,13 @@ function Container() {
               item.revealed = true;
             }
           }
-        })
+        }),
       );
       return;
     }
     if (!mineGenerated) {
       setState(
-        produce((draft) => updateNumber(generateMines(draft, { y, x })))
+        produce((draft) => updateNumber(generateMines(draft, { y, x }))),
       );
       mineGenerated = true;
     }
@@ -179,7 +179,7 @@ function Container() {
         }
         draft[y][x].revealed = true;
         expendZero(draft[y][x], draft);
-      })
+      }),
     );
   };
   // 右键菜单
@@ -190,7 +190,7 @@ function Container() {
         if (!draft[y][x].revealed) {
           draft[y][x].flagged = !draft[y][x].flagged;
         }
-      })
+      }),
     );
   };
   return (

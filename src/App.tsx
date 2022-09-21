@@ -1,4 +1,10 @@
+import Container from "./components/Container";
+
 function App() {
-  return <div className="text-red-700">App</div>;
+  return (
+    <div className="flex h-screen justify-center items-center">
+      <Container />
+    </div>
+  );
 }
 export default App;
