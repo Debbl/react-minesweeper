@@ -1,11 +1,9 @@
 import { MouseEvent, useEffect } from "react";
 import { useState } from "react";
 import produce from "immer";
-import clsx from "clsx";
 import { GiMineExplosion, RiFlagFill } from "react-icons/all";
-// import "./style.scss";
 
-const dev = true;
+const dev = false;
 
 interface BlockState {
   x: number;
@@ -79,31 +77,19 @@ function initState() {
     ),
   );
 }
-// 炸弹和按钮的样式
-function getBlockClass(item: BlockState) {
-  if (!item.revealed) return ["btn-mine", "unrevealed-mine"];
-  return ["btn-mine", item.mine ? "active-mine" : ""];
-}
 
 // 数字的样式
 const numberColors = [
-  "transparent",
-  "blue",
-  "green",
-  "skyblue",
-  "orange",
-  "red",
-  "purple",
-  "pink",
-  "red",
+  "text-transparent",
+  "text-blue-500",
+  "text-green-500",
+  "text-yellow-500",
+  "text-orange-500",
+  "text-red-500",
+  "text-purple-500",
+  "text-pink-500",
+  "text-teal-500",
 ];
-function getBlockStyle(item: BlockState) {
-  if (!item.revealed) return {};
-  return {
-    color: numberColors[item.adjacentMines],
-    border: "1px solid rgba(156,163,175,0.1)",
-  };
-}
 
 let mineGenerated = false;
 
@@ -141,6 +127,13 @@ function checkGameState(state: BlockState[][]) {
       alert("You win!");
     }
   }
+}
+
+// 格子的样式
+function getBlockClassName(block: BlockState) {
+  if (block.flagged) return "bg-gray-500/10";
+  if (!block.revealed) return "bg-gray-500/10 hover:bg-gray-500/30";
+  return block.mine ? "bg-red-500/50" : numberColors[block.adjacentMines];
 }
 
 function Container() {
@@ -194,21 +187,23 @@ function Container() {
     );
   };
   return (
-    <div className="app">
-      <div className="mb-5 font-medium">扫雷</div>
-      <div className="container">
+    <div className="flex flex-col items-center">
+      <div className="mb-5 text-2xl font-bold">扫雷</div>
+      <div className="flex flex-col">
         {state.map((rows, y) => (
-          <div key={y} className="rows">
+          <div key={y} className="flex">
             {rows.map((item, x) => (
               <button
                 key={x}
-                className={clsx(getBlockClass(item))}
+                className={
+                  "m-[1px] flex h-11 w-11 items-center justify-center border " +
+                  getBlockClassName(item)
+                }
                 onClick={() => onClick(item.y, item.x)}
                 onContextMenu={(e) => onContextMenu(e, { y, x })}
-                style={!item.mine ? getBlockStyle(item) : {}}
               >
                 {item.flagged ? (
-                  <RiFlagFill style={{ color: "red" }} />
+                  <RiFlagFill className="text-red-700" />
                 ) : item.mine ? (
                   (item.revealed || dev) && <GiMineExplosion />
                 ) : (
