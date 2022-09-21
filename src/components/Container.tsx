@@ -1,18 +1,10 @@
+import type { BlockState } from "@/types";
 import { MouseEvent, useEffect } from "react";
 import { useState } from "react";
 import produce from "immer";
 import { GiMineExplosion, RiFlagFill } from "react-icons/all";
 
 const dev = false;
-
-interface BlockState {
-  x: number;
-  y: number;
-  revealed?: boolean;
-  mine?: boolean;
-  flagged?: boolean;
-  adjacentMines: number;
-}
 
 const WIDTH = 5;
 const HEIGHT = 5;
@@ -119,12 +111,11 @@ function checkGameState(state: BlockState[][]) {
   const blocks = state.flat();
   if (blocks.every((block) => block.revealed || block.flagged)) {
     if (
-      blocks.every(
-        (block) =>
-          (block.revealed && !block.mine) || (block.flagged && block.mine),
-      )
+      blocks.every((block) => block.revealed || (block.flagged && block.mine))
     ) {
       alert("You win!");
+    } else {
+      alert("You cheat");
     }
   }
 }
@@ -141,7 +132,7 @@ function Container() {
   const [state, setState] = useState(initState);
   useEffect(() => {
     checkGameState(state);
-  });
+  }, [state]);
   // 点击
   const onClick = (y: number, x: number) => {
     if (state[y][x].flagged) return;
@@ -149,11 +140,7 @@ function Container() {
       alert("BOOM!");
       setState(
         produce(state, (draft) => {
-          for (const rows of draft) {
-            for (const item of rows) {
-              item.revealed = true;
-            }
-          }
+          draft[y][x].revealed = true;
         }),
       );
       return;
@@ -166,10 +153,6 @@ function Container() {
     }
     setState((state) =>
       produce(state, (draft) => {
-        if (!mineGenerated) {
-          draft = updateNumber(generateMines(draft, { y, x }));
-          mineGenerated = true;
-        }
         draft[y][x].revealed = true;
         expendZero(draft[y][x], draft);
       }),
