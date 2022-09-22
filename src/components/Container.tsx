@@ -3,6 +3,7 @@ import { MouseEvent, useContext, useEffect } from "react";
 import produce from "immer";
 import Block from "./Block";
 import MainContext from "@/contexts/MainContext";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/all";
 import {
   initState,
   updateNumber,
@@ -27,6 +28,10 @@ function Container() {
   // 检查游戏进度
   useEffect(() => {
     checkGameState(state, gameStateRef);
+  }, [state]);
+  // 持久化
+  useEffect(() => {
+    // 持久化
     setGameState({
       state,
       isDev,
@@ -34,7 +39,7 @@ function Container() {
       mineGeneratedRef: mineGeneratedRef.current,
       gameStateRef: gameStateRef.current,
     });
-  }, []);
+  }, [state, isDev, blockArea, mineGeneratedRef.current, gameStateRef.current]);
   // 点击
   const onClick = (block: BlockState) => {
     if (gameStateRef.current !== GameStateRef.play) return;
@@ -82,8 +87,20 @@ function Container() {
   return (
     <div className="flex flex-col items-center">
       <div className="mb-5 text-2xl font-bold">扫雷</div>
-      <div className="flex w-full justify-evenly">
-        <button onClick={() => reset()}>开始</button>
+      <div className="mb-3 flex h-8 w-full justify-evenly text-green-600/50">
+        <button
+          className="text  rounded-md border px-3"
+          onClick={() => reset()}
+        >
+          新游戏
+        </button>
+        <button className="text-green-600/40" onClick={() => setIsDev(!isDev)}>
+          {isDev ? (
+            <AiFillEyeInvisible className="h-8 w-8" />
+          ) : (
+            <AiFillEye className="h-8 w-8" />
+          )}
+        </button>
       </div>
       <div className="flex flex-col">
         {state.map((rows, y) => (
@@ -98,14 +115,6 @@ function Container() {
             ))}
           </div>
         ))}
-      </div>
-      <div className="mt-2">
-        <button
-          className="rounded border bg-green-500/50 px-3 text-white"
-          onClick={() => setIsDev(!isDev)}
-        >
-          {isDev ? "DEV" : "NORMAL"}
-        </button>
       </div>
     </div>
   );

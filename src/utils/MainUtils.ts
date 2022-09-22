@@ -108,7 +108,7 @@ function checkGameState(
     gameStateRef.current = GameStateRef.play;
   }
 }
-// 现实所有的炸弹
+// 显示所有的炸弹
 function showAllMines(state: BlockState[][]) {
   return produce(state, (draft) => {
     draft.flat().forEach((block) => (block.revealed = true));
