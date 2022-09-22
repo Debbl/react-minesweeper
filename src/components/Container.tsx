@@ -22,10 +22,18 @@ function Container() {
     blockArea,
     mineGeneratedRef,
     gameStateRef,
+    setGameState,
   } = useContext(MainContext);
   // 检查游戏进度
   useEffect(() => {
     checkGameState(state, gameStateRef);
+    setGameState({
+      state,
+      isDev,
+      blockArea,
+      mineGeneratedRef,
+      gameStateRef,
+    });
   }, [state]);
   // 点击
   const onClick = (block: BlockState) => {

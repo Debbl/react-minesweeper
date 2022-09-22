@@ -1,3 +1,4 @@
+import { IFuncUpdater } from "ahooks/lib/createUseStorageState";
 import type { Dispatch, SetStateAction, MutableRefObject } from "react";
 
 export interface BlockState {
@@ -29,4 +30,24 @@ export interface GameState {
   setBlockArea: Dispatch<SetStateAction<BlockArea>>;
   mineGeneratedRef: MutableRefObject<boolean>;
   gameStateRef: MutableRefObject<GameStateRef>;
+}
+
+export interface GameChangeState extends GameState {
+  setGameState: (
+    value:
+      | {
+          state: BlockState[][];
+          isDev: boolean;
+          blockArea: BlockArea;
+          mineGeneratedRef: boolean;
+          gameStateRef: GameStateRef;
+        }
+      | IFuncUpdater<{
+          state: BlockState[][];
+          isDev: boolean;
+          blockArea: BlockArea;
+          mineGeneratedRef: boolean;
+          gameStateRef: GameStateRef;
+        }>,
+  ) => void;
 }
