@@ -31,8 +31,8 @@ function Container() {
       state,
       isDev,
       blockArea,
-      mineGeneratedRef,
-      gameStateRef,
+      mineGeneratedRef: mineGeneratedRef.current,
+      gameStateRef: gameStateRef.current,
     });
   }, [state]);
   // 点击
