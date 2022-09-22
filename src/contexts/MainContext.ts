@@ -1,17 +1,17 @@
-import { GameState, GameStateRef } from "@/types";
-import { createContext } from "react";
+import { PlayState, GameChangeState } from "@/types";
 import { defaultBlockArea } from "@/constants/constants";
 import { initState } from "@/utils/MainUtils";
+import { createContext } from "react";
 
-const MainContext = createContext<GameState>({
-  state: initState({ width: 5, height: 5 }),
-  setState: () => undefined,
-  isDev: false,
-  setIsDev: () => undefined,
-  blockArea: defaultBlockArea,
-  setBlockArea: () => undefined,
-  mineGeneratedRef: { current: false },
-  gameStateRef: { current: GameStateRef.play },
+const MainContext = createContext<GameChangeState>({
+  gameState: {
+    state: initState({ width: 5, height: 5 }),
+    isDev: false,
+    blockArea: defaultBlockArea,
+    mineGenerated: false,
+    playState: PlayState.play,
+  },
+  setGameState: () => undefined,
 });
 
 export default MainContext;

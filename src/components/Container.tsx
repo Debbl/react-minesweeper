@@ -1,4 +1,4 @@
-import { BlockState, GameStateRef } from "@/types";
+import { BlockState, PlayState } from "@/types";
 import { MouseEvent, useContext, useEffect } from "react";
 import produce from "immer";
 import Block from "./Block";
@@ -14,62 +14,84 @@ import {
 
 function Container() {
   // 初始化 data
-  const {
-    state,
-    setState,
-    isDev,
-    setIsDev,
-    blockArea,
-    mineGeneratedRef,
-    gameStateRef,
-  } = useContext(MainContext);
+  const gameChangeState = useContext(MainContext);
+  const { gameState, setGameState } = gameChangeState;
+  const { state, isDev } = gameState;
   // 检查游戏进度
   useEffect(() => {
-    checkGameState(state, gameStateRef);
+    checkGameState(state, gameChangeState);
   }, [state]);
   // 点击
   const onClick = (block: BlockState) => {
-    if (gameStateRef.current !== GameStateRef.play) return;
+    if (gameState.playState !== PlayState.play) return;
     const { y, x } = block;
     if (state[y][x].flagged) return;
     if (state[y][x].mine) {
       alert("BOOM!");
-      gameStateRef.current = GameStateRef.lost;
-      setState(showAllMines(state));
+      setGameState({
+        ...gameState,
+        state: showAllMines(gameState.state),
+        playState: PlayState.lost,
+      });
+      // gameStateRef.current = GameStateRef.lost;
+      // setState(showAllMines(state));
       return;
     }
-    if (!mineGeneratedRef.current) {
-      setState(
-        produce((draft) =>
-          updateNumber(generateMines(draft, { y, x }), blockArea),
+    if (!gameState.mineGenerated) {
+      setGameState({
+        ...gameState,
+        mineGenerated: true,
+        state: updateNumber(
+          generateMines(gameState.state, { y, x }),
+          gameState.blockArea,
         ),
-      );
-      mineGeneratedRef.current = true;
+      });
     }
-    setState((state) =>
-      produce(state, (draft) => {
+    setGameState({
+      ...gameState,
+      state: produce(gameState.state, (draft) => {
         draft[y][x].revealed = true;
-        expendZero(draft[y][x], draft, blockArea);
+        expendZero(draft[y][x], draft, gameState.blockArea);
       }),
-    );
+    });
+    // setState((state) =>
+    //   produce(state, (draft) => {
+    //     draft[y][x].revealed = true;
+    //     expendZero(draft[y][x], draft, blockArea);
+    //   }),
+    // );
   };
   // 右键菜单
   const onContextMenu = (e: MouseEvent, block: BlockState) => {
     e.preventDefault();
     const { y, x } = block;
-    setState(
-      produce(state, (draft) => {
+    setGameState({
+      ...gameState,
+      state: produce(state, (draft) => {
         if (!draft[y][x].revealed) {
           draft[y][x].flagged = !draft[y][x].flagged;
         }
       }),
-    );
+    });
+    // setState(
+    //   produce(state, (draft) => {
+    //     if (!draft[y][x].revealed) {
+    //       draft[y][x].flagged = !draft[y][x].flagged;
+    //     }
+    //   }),
+    // );
   };
   // 重置游戏
   const reset = () => {
-    setState(initState(blockArea));
-    mineGeneratedRef.current = false;
-    gameStateRef.current = GameStateRef.play;
+    setGameState({
+      ...gameState,
+      state: initState(gameState.blockArea),
+      mineGenerated: false,
+      playState: PlayState.play,
+    });
+    // setState(initState(blockArea));
+    // mineGeneratedRef.current = false;
+    // gameStateRef.current = GameStateRef.play;
   };
   return (
     <div className="flex flex-col items-center">
@@ -94,7 +116,9 @@ function Container() {
       <div className="mt-2">
         <button
           className="rounded border bg-green-500/50 px-3 text-white"
-          onClick={() => setIsDev(!isDev)}
+          onClick={() =>
+            setGameState({ ...gameState, isDev: !gameState.isDev })
+          }
         >
           {isDev ? "DEV" : "NORMAL"}
         </button>

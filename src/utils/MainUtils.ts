@@ -1,5 +1,4 @@
-import { BlockArea, BlockState, GameStateRef } from "@/types";
-import type { MutableRefObject } from "react";
+import { BlockArea, BlockState, GameChangeState, PlayState } from "@/types";
 import produce from "immer";
 import { directions } from "@/constants/constants";
 
@@ -87,9 +86,10 @@ function expendZero(
 // 检查游戏进度
 function checkGameState(
   state: BlockState[][],
-  gameStateRef: MutableRefObject<GameStateRef>,
+  gameChangeState: GameChangeState,
 ) {
   const blocks = state.flat();
+  const { gameState, setGameState } = gameChangeState;
   if (blocks.every((block) => block.revealed || block.flagged)) {
     if (
       blocks.every(
@@ -97,15 +97,18 @@ function checkGameState(
           (block.revealed && !block.mine) || (block.flagged && block.mine),
       )
     ) {
-      if (gameStateRef.current === GameStateRef.play) {
+      if (gameState.playState === PlayState.play) {
         alert("You win!");
-        gameStateRef.current = GameStateRef.won;
+        setGameState({
+          ...gameState,
+          playState: PlayState.won,
+        });
       }
     } else {
-      if (gameStateRef.current === GameStateRef.play) alert("You cheat");
+      if (gameState.playState === PlayState.play) alert("You cheat");
     }
   } else {
-    gameStateRef.current = GameStateRef.play;
+    gameState.playState = PlayState.play;
   }
 }
 // 现实所有的炸弹

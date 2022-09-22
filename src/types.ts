@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction, MutableRefObject } from "react";
+import { IFuncUpdater } from "ahooks/lib/createUseStorageState";
 
 export interface BlockState {
   x: number;
@@ -14,7 +14,7 @@ export interface BlockArea {
   height: number;
 }
 
-export enum GameStateRef {
+export enum PlayState {
   "play",
   "won",
   "lost",
@@ -22,11 +22,13 @@ export enum GameStateRef {
 
 export interface GameState {
   state: BlockState[][];
-  setState: Dispatch<SetStateAction<BlockState[][]>>;
   isDev: boolean;
-  setIsDev: Dispatch<SetStateAction<boolean>>;
   blockArea: BlockArea;
-  setBlockArea: Dispatch<SetStateAction<BlockArea>>;
-  mineGeneratedRef: MutableRefObject<boolean>;
-  gameStateRef: MutableRefObject<GameStateRef>;
+  mineGenerated: boolean;
+  playState: PlayState;
+}
+
+export interface GameChangeState {
+  gameState: GameState;
+  setGameState: (value: GameState | IFuncUpdater<GameState>) => void;
 }

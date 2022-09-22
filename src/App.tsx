@@ -1,31 +1,26 @@
-import { BlockArea, GameStateRef } from "./types";
-import { useState } from "react";
+import { GameState, PlayState } from "./types";
 import Container from "./components/Container";
 import MainContext from "./contexts/MainContext";
 import { defaultBlockArea } from "@/constants/constants";
-import { useRef } from "react";
 import { initState } from "./utils/MainUtils";
+import { useLocalStorageState } from "ahooks";
 
 function App() {
-  const [isDev, setIsDev] = useState(false);
-  const [blockArea, setBlockArea] = useState<BlockArea>(defaultBlockArea);
-  const mineGeneratedRef = useRef(false);
-  const gameStateRef = useRef<GameStateRef>(GameStateRef.play);
-  const [state, setState] = useState(initState(blockArea));
+  const [gameState, setGameState] = useLocalStorageState<GameState>(
+    "game-state",
+    {
+      defaultValue: {
+        state: initState({ width: 5, height: 5 }),
+        isDev: false,
+        blockArea: defaultBlockArea,
+        mineGenerated: false,
+        playState: PlayState.play,
+      },
+    },
+  );
   return (
     <div className="box-border flex h-screen justify-center pt-[10%]">
-      <MainContext.Provider
-        value={{
-          state,
-          setState,
-          isDev,
-          setIsDev,
-          blockArea,
-          setBlockArea,
-          mineGeneratedRef,
-          gameStateRef,
-        }}
-      >
+      <MainContext.Provider value={{ gameState, setGameState }}>
         <Container />
       </MainContext.Provider>
     </div>
