@@ -34,7 +34,7 @@ function Container() {
       mineGeneratedRef: mineGeneratedRef.current,
       gameStateRef: gameStateRef.current,
     });
-  }, [state]);
+  }, []);
   // 点击
   const onClick = (block: BlockState) => {
     if (gameStateRef.current !== GameStateRef.play) return;
