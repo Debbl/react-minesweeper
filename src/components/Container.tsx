@@ -51,7 +51,7 @@ function Container() {
     if (state[y][x].mine) {
       setTimeout(() => {
         alert("BOOM!");
-      }, 0);
+      });
       gameStateRef.current = GameStateRef.lost;
       setState(showAllMines(state));
       return;

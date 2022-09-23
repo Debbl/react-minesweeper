@@ -98,11 +98,14 @@ function checkGameState(
       )
     ) {
       if (gameStateRef.current === GameStateRef.play) {
-        alert("You win!");
+        setTimeout(() => {
+          alert("You win!");
+        });
         gameStateRef.current = GameStateRef.won;
       }
     } else {
-      if (gameStateRef.current === GameStateRef.play) alert("You cheat");
+      if (gameStateRef.current === GameStateRef.play)
+        setTimeout(() => alert("You cheat"));
     }
   } else {
     gameStateRef.current = GameStateRef.play;
