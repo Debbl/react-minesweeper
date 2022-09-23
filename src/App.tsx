@@ -6,6 +6,7 @@ import { defaultBlockArea } from "@/constants/constants";
 import { useRef } from "react";
 import { initState } from "./utils/MainUtils";
 import { useLocalStorageState } from "ahooks";
+import Footer from "./components/Footer";
 
 function App() {
   // 持久化
@@ -25,7 +26,7 @@ function App() {
   const gameStateRef = useRef<GameStateRef>(gameState.gameStateRef);
 
   return (
-    <div className="box-border flex h-screen justify-center pt-[10%]">
+    <div className="box-border flex h-screen flex-col items-center justify-center pt-[10%] font-sans dark:bg-slate-800 dark:text-white">
       <MainContext.Provider
         value={{
           state,
@@ -40,6 +41,7 @@ function App() {
         }}
       >
         <Container />
+        <Footer />
       </MainContext.Provider>
     </div>
   );

@@ -3,7 +3,7 @@ import { MouseEvent, useContext, useEffect } from "react";
 import produce from "immer";
 import Block from "./Block";
 import MainContext from "@/contexts/MainContext";
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/all";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import {
   initState,
   updateNumber,
@@ -47,7 +47,9 @@ function Container() {
     const { y, x } = block;
     if (state[y][x].flagged) return;
     if (state[y][x].mine) {
-      alert("BOOM!");
+      setTimeout(() => {
+        alert("BOOM!");
+      }, 0);
       gameStateRef.current = GameStateRef.lost;
       setState(showAllMines(state));
       return;
@@ -99,37 +101,22 @@ function Container() {
     <div className="flex flex-col items-center">
       <div className="mb-5 text-2xl font-bold">扫雷</div>
       <div className="mb-3 flex h-8 w-full justify-evenly text-green-600/50">
-        <button
-          className="text  rounded-md border px-3"
-          onClick={() => reset(blockArea)}
-        >
+        <button className="btn" onClick={() => reset(blockArea)}>
           新游戏
         </button>
-        <button
-          className="rounded border px-3"
-          onClick={() => changeBlockArea(0, -1)}
-        >
+        <button className="btn" onClick={() => changeBlockArea(0, -1)}>
           -
         </button>
-        <button
-          className="rounded border px-3"
-          onClick={() => changeBlockArea(0, 1)}
-        >
+        <button className="btn" onClick={() => changeBlockArea(0, 1)}>
           +
         </button>
-        <button
-          className="rounded border px-3"
-          onClick={() => changeBlockArea(-1, 0)}
-        >
+        <button className="btn" onClick={() => changeBlockArea(-1, 0)}>
           -
         </button>
-        <button
-          className="rounded border px-3"
-          onClick={() => changeBlockArea(1, 0)}
-        >
+        <button className="btn" onClick={() => changeBlockArea(1, 0)}>
           +
         </button>
-        <button className="text-green-600/40" onClick={() => setIsDev(!isDev)}>
+        <button className="text-teal-600" onClick={() => setIsDev(!isDev)}>
           {isDev ? (
             <AiFillEyeInvisible className="h-8 w-8" />
           ) : (
