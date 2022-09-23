@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useLocalStorageState } from "ahooks";
+import { useEffect } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { IoMdMoon } from "react-icons/io";
 import { RiSunFill } from "react-icons/ri";
 
 function Footer() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useLocalStorageState("minesweeper-isDark", {
+    defaultValue: false,
+  });
   useEffect(() => {
     const htmlEl = document.getElementsByTagName("html")[0];
     if (isDark) {

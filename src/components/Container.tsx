@@ -1,9 +1,9 @@
 import { BlockState, GameStateRef } from "@/types";
-import { MouseEvent, useContext, useEffect } from "react";
+import { MouseEvent, useContext, useEffect, useState } from "react";
 import produce from "immer";
 import Block from "./Block";
 import MainContext from "@/contexts/MainContext";
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { AiFillEyeInvisible, AiFillEye, AiFillSetting } from "react-icons/ai";
 import {
   initState,
   updateNumber,
@@ -12,6 +12,7 @@ import {
   checkGameState,
   showAllMines,
 } from "@/utils/MainUtils";
+import Setting from "./Setting";
 
 function Container() {
   // 初始化 data
@@ -26,6 +27,7 @@ function Container() {
     gameStateRef,
     setGameState,
   } = useContext(MainContext);
+  const [isShowSetting, setIsShowSetting] = useState(false);
   // 检查游戏进度
   useEffect(() => {
     checkGameState(state, gameStateRef);
@@ -98,23 +100,24 @@ function Container() {
     reset(newBlockArea);
   };
   return (
-    <div className="flex flex-col items-center">
-      <div className="mb-5 text-2xl font-bold">扫雷</div>
-      <div className="mb-3 flex h-8 w-full justify-evenly text-green-600/50">
+    <div className="flex flex-col items-center gap-2">
+      {isShowSetting && (
+        <Setting
+          changeBlockArea={changeBlockArea}
+          setIsShowSetting={setIsShowSetting}
+          blockArea={blockArea}
+        />
+      )}
+      <div className="text-2xl font-bold">扫雷</div>
+      <div className="flex h-8 w-60 justify-evenly text-green-600/50">
         <button className="btn" onClick={() => reset(blockArea)}>
           新游戏
         </button>
-        <button className="btn" onClick={() => changeBlockArea(0, -1)}>
-          -
-        </button>
-        <button className="btn" onClick={() => changeBlockArea(0, 1)}>
-          +
-        </button>
-        <button className="btn" onClick={() => changeBlockArea(-1, 0)}>
-          -
-        </button>
-        <button className="btn" onClick={() => changeBlockArea(1, 0)}>
-          +
+        <button
+          className="text-teal-600"
+          onClick={() => setIsShowSetting(!isShowSetting)}
+        >
+          <AiFillSetting className="h-8 w-8" />
         </button>
         <button className="text-teal-600" onClick={() => setIsDev(!isDev)}>
           {isDev ? (

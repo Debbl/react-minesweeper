@@ -10,15 +10,18 @@ import Footer from "./components/Footer";
 
 function App() {
   // 持久化
-  const [gameState, setGameState] = useLocalStorageState("game-state", {
-    defaultValue: {
-      state: initState(defaultBlockArea),
-      isDev: false,
-      blockArea: defaultBlockArea,
-      mineGeneratedRef: false,
-      gameStateRef: GameStateRef.play,
+  const [gameState, setGameState] = useLocalStorageState(
+    "minesweeper-game-state",
+    {
+      defaultValue: {
+        state: initState(defaultBlockArea),
+        isDev: false,
+        blockArea: defaultBlockArea,
+        mineGeneratedRef: false,
+        gameStateRef: GameStateRef.play,
+      },
     },
-  });
+  );
   const [isDev, setIsDev] = useState(gameState.isDev);
   const [blockArea, setBlockArea] = useState<BlockArea>(gameState.blockArea);
   const [state, setState] = useState(gameState.state);
@@ -26,7 +29,7 @@ function App() {
   const gameStateRef = useRef<GameStateRef>(gameState.gameStateRef);
 
   return (
-    <div className="box-border flex h-screen flex-col items-center justify-center pt-[10%] font-sans dark:bg-slate-800 dark:text-white">
+    <div className="box-border flex h-screen flex-col items-center justify-start pt-[5%] font-sans dark:bg-slate-800 dark:text-white">
       <MainContext.Provider
         value={{
           state,
