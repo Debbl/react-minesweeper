@@ -6,9 +6,9 @@ import { directions } from "@/constants/constants";
 // 初始化 state
 function initState(blockArea: BlockArea) {
   const { width, height } = blockArea;
-  return Array.from({ length: width }, (_, y) =>
+  return Array.from({ length: height }, (_, y) =>
     Array.from(
-      { length: height },
+      { length: width },
       (_, x): BlockState => ({
         x,
         y,
@@ -66,6 +66,9 @@ function getSiblings(
       const x2 = block.x + dx;
       const y2 = block.y + dy;
       if (x2 < 0 || x2 >= width || y2 < 0 || y2 >= height) return;
+      console.log(width, height, "0000");
+
+      console.log(y2, x2);
       return state[y2][x2];
     })
     .filter(Boolean) as BlockState[];

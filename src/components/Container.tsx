@@ -21,6 +21,7 @@ function Container() {
     isDev,
     setIsDev,
     blockArea,
+    setBlockArea,
     mineGeneratedRef,
     gameStateRef,
     setGameState,
@@ -79,10 +80,20 @@ function Container() {
     );
   };
   // 重置游戏
-  const reset = () => {
+  const reset = (blockArea: { width: number; height: number }) => {
     setState(initState(blockArea));
     mineGeneratedRef.current = false;
     gameStateRef.current = GameStateRef.play;
+  };
+  // 改变宽高
+  const changeBlockArea = (x: number, y: number) => {
+    if (blockArea.width + x <= 3 || blockArea.height + y <= 3) return;
+    const newBlockArea = {
+      width: blockArea.width + x,
+      height: blockArea.height + y,
+    };
+    setBlockArea(newBlockArea);
+    reset(newBlockArea);
   };
   return (
     <div className="flex flex-col items-center">
@@ -90,9 +101,33 @@ function Container() {
       <div className="mb-3 flex h-8 w-full justify-evenly text-green-600/50">
         <button
           className="text  rounded-md border px-3"
-          onClick={() => reset()}
+          onClick={() => reset(blockArea)}
         >
           新游戏
+        </button>
+        <button
+          className="rounded border px-3"
+          onClick={() => changeBlockArea(0, -1)}
+        >
+          -
+        </button>
+        <button
+          className="rounded border px-3"
+          onClick={() => changeBlockArea(0, 1)}
+        >
+          +
+        </button>
+        <button
+          className="rounded border px-3"
+          onClick={() => changeBlockArea(-1, 0)}
+        >
+          -
+        </button>
+        <button
+          className="rounded border px-3"
+          onClick={() => changeBlockArea(1, 0)}
+        >
+          +
         </button>
         <button className="text-green-600/40" onClick={() => setIsDev(!isDev)}>
           {isDev ? (
