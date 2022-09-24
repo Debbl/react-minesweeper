@@ -19,7 +19,7 @@ const numberColors = [
 // 格子的样式
 function getBlockClassName(block: BlockState) {
   if (block.flagged) return "bg-gray-500/10";
-  if (!block.revealed) return "bg-gray-500/10 hover:bg-gray-500/30";
+  if (!block.revealed) return "bg-gray-500/40 hover:bg-gray-500/30";
   return block.mine ? "bg-red-500/50" : numberColors[block.adjacentMines];
 }
 
@@ -35,7 +35,7 @@ function Block(props: BlockType) {
     <>
       <button
         className={
-          "m-[1px] flex h-11 w-11 items-center justify-center border " +
+          "m-[1px] flex h-9 w-9 items-center justify-center border " +
           getBlockClassName(block)
         }
         onClick={() => onClick(block)}

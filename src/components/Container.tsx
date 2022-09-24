@@ -1,4 +1,4 @@
-import { BlockState, GameStateRef } from "@/types";
+import { BlockArea, BlockState, GameStateRef } from "@/types";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import produce from "immer";
 import Block from "./Block";
@@ -98,12 +98,17 @@ function Container() {
     gameStateRef.current = GameStateRef.play;
   };
   // 改变宽高
-  const changeBlockArea = (x: number, y: number) => {
+  const changeBlockArea = (x: number, y: number, flag?: boolean) => {
     if (blockArea.width + x <= 3 || blockArea.height + y <= 3) return;
-    const newBlockArea = {
-      width: blockArea.width + x,
-      height: blockArea.height + y,
-    };
+    const newBlockArea = flag
+      ? {
+          width: x,
+          height: y,
+        }
+      : {
+          width: blockArea.width + x,
+          height: blockArea.height + y,
+        };
     if (mines > newBlockArea.width * newBlockArea.height - 9) {
       setMines(newBlockArea.width * newBlockArea.height - 9);
     }
@@ -111,12 +116,21 @@ function Container() {
     reset(newBlockArea);
   };
   // 改变炸弹数
-  const changeMines = (count: number) => {
+  const changeMines = (count: number, flag?: boolean) => {
     const newMines = mines + count;
     if (newMines < 1 || newMines > blockArea.width * blockArea.height - 9)
       return;
-    setMines(newMines);
+    setMines(flag ? count : newMines);
     reset(blockArea);
+  };
+  // 改变等级
+  const changeLevel = (x: number, y: number, mines: number) => {
+    setBlockArea({
+      width: x,
+      height: y,
+    });
+    setMines(mines);
+    reset({ width: x, height: y });
   };
   // 炸弹数
   const minesCount =
@@ -152,10 +166,21 @@ function Container() {
           )}
         </button>
       </div>
-      <div>
-        <div className="flex items-center gap-x-2 text-3xl">
+      <div className="flex items-center gap-x-3">
+        <div className="flex w-20 items-center gap-x-2 text-3xl">
           <GiStarProminences />
           <span>{minesCount}</span>
+        </div>
+        <div className="flex gap-x-3">
+          <button className="btn" onClick={() => changeLevel(9, 9, 10)}>
+            简单
+          </button>
+          <button className="btn" onClick={() => changeLevel(16, 16, 40)}>
+            中等
+          </button>
+          <button className="btn" onClick={() => changeLevel(16, 30, 99)}>
+            困难
+          </button>
         </div>
       </div>
       <div className="flex flex-col">
