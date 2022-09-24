@@ -82,6 +82,7 @@ function Container() {
   // 右键菜单
   const onContextMenu = (e: MouseEvent, block: BlockState) => {
     e.preventDefault();
+    if (gameStateRef.current !== GameStateRef.play) return;
     const { y, x } = block;
     setState(
       produce(state, (draft) => {
