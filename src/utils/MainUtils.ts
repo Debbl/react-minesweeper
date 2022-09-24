@@ -100,23 +100,30 @@ function checkGameState(
   gameStateRef: MutableRefObject<GameStateRef>,
 ) {
   const blocks = state.flat();
-  if (blocks.every((block) => block.revealed || block.flagged)) {
-    if (
-      blocks.every(
-        (block) =>
-          (block.revealed && !block.mine) || (block.flagged && block.mine),
-      )
-    ) {
-      if (gameStateRef.current === GameStateRef.play) {
-        gameStateRef.current = GameStateRef.won;
-      }
-    } else {
-      if (gameStateRef.current === GameStateRef.play)
-        setTimeout(() => alert("You cheat"));
+  if (blocks.every((block) => block.revealed || block.mine)) {
+    if (gameStateRef.current === GameStateRef.play) {
+      gameStateRef.current = GameStateRef.won;
     }
   } else {
     gameStateRef.current = GameStateRef.play;
   }
+  // if (blocks.every((block) => block.revealed || block.flagged)) {
+  //   if (
+  //     blocks.every(
+  //       (block) =>
+  //         (block.revealed && !block.mine) || (block.flagged && block.mine),
+  //     )
+  //   ) {
+  //     if (gameStateRef.current === GameStateRef.play) {
+  //       gameStateRef.current = GameStateRef.won;
+  //     }
+  //   } else {
+  //     if (gameStateRef.current === GameStateRef.play)
+  //       setTimeout(() => alert("You cheat"));
+  //   }
+  // } else {
+  //   gameStateRef.current = GameStateRef.play;
+  // }
 }
 // 显示所有的炸弹
 function showAllMines(state: BlockState[][]) {

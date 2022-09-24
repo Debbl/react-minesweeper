@@ -1,4 +1,4 @@
-import { BlockArea, BlockState, GameStateRef } from "@/types";
+import { BlockState, GameStateRef } from "@/types";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import produce from "immer";
 import Block from "./Block";
