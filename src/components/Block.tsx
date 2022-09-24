@@ -35,7 +35,7 @@ function Block(props: BlockType) {
     <>
       <button
         className={
-          "m-[1px] flex h-9 w-9 items-center justify-center border " +
+          "m-[1px] flex h-8 w-8 items-center justify-center border " +
           getBlockClassName(block)
         }
         onClick={() => onClick(block)}
