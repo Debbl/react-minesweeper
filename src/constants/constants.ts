@@ -1,10 +1,10 @@
 import type { BlockArea } from "@/types";
 
 const BLOCK_AREA: BlockArea = {
-  width: 5,
-  height: 5,
+  width: 9,
+  height: 9,
 };
-const MINES = 3;
+const MINES = 10;
 
 const DIRECTIONS = [
   [-1, -1],
