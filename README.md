@@ -5,10 +5,11 @@
 ## 技术栈
 
 - React
-- TypeSCript
+- TypeScript
 - Tailwind CSS
 - immer
 - ahooks
+- canvas-confetti
 
 ## 功能
 

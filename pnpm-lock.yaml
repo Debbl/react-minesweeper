@@ -2,7 +2,6 @@ lockfileVersion: 5.4
 
 specifiers:
   '@types/canvas-confetti': ^1.4.3
-  '@types/lodash': ^4.14.185
   '@types/node': ^18.7.18
   '@types/react': ^18.0.17
   '@types/react-dom': ^18.0.6
@@ -30,9 +29,6 @@ specifiers:
   vite: ^3.1.0
 
 dependencies:
-  '@types/canvas-confetti': 1.4.3
-  '@types/lodash': 4.14.185
-  '@types/node': 18.7.18
   ahooks: 3.7.1_react@18.2.0
   canvas-confetti: 1.5.1
   clsx: 1.2.1
@@ -43,6 +39,8 @@ dependencies:
   react-icons: 4.4.0_react@18.2.0
 
 devDependencies:
+  '@types/canvas-confetti': 1.4.3
+  '@types/node': 18.7.18
   '@types/react': 18.0.20
   '@types/react-dom': 18.0.6
   '@typescript-eslint/eslint-plugin': 5.38.0_wsb62dxj2oqwgas4kadjymcmry
@@ -440,7 +438,7 @@ packages:
 
   /@types/canvas-confetti/1.4.3:
     resolution: {integrity: sha512-UwFPTsW1ZwVyo/ETp4hPSikSD7yl2V42E3VWBF5P/0+DHO4iajyceWv7hfNdZ2AX5tkZnuViiBWOqyCPohU2FQ==}
-    dev: false
+    dev: true
 
   /@types/js-cookie/2.2.7:
     resolution: {integrity: sha512-aLkWa0C0vO5b4Sr798E26QgOkss68Un0bLjs7u9qxzPT5CG+8DuNTffWES58YzJs3hrVAOs1wonycqEBqNJubA==}
@@ -450,13 +448,9 @@ packages:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
 
-  /@types/lodash/4.14.185:
-    resolution: {integrity: sha512-evMDG1bC4rgQg4ku9tKpuMh5iBNEwNa3tf9zRHdP1qlv+1WUg44xat4IxCE14gIpZRGUUWAx2VhItCZc25NfMA==}
-    dev: false
-
   /@types/node/18.7.18:
     resolution: {integrity: sha512-m+6nTEOadJZuTPkKR/SYK3A2d7FZrgElol9UP1Kae90VVU4a6mxnPuLiIW1m4Cq4gZ/nWb9GrdVXJCoCazDAbg==}
-    dev: false
+    dev: true
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
