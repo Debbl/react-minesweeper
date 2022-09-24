@@ -137,7 +137,7 @@ function Container() {
   const minesCount =
     mines - state.flat().reduce((a, b) => a + (b.flagged ? 1 : 0), 0);
   return (
-    <div className="inline-flex flex-col items-center gap-2 px-20 pb-10">
+    <div className="inline-flex flex-col items-center gap-2 p-10">
       {isShowSetting && (
         <Setting
           mines={mines}
