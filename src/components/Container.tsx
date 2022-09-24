@@ -14,6 +14,7 @@ import {
 } from "@/utils/MainUtils";
 import Setting from "./Setting";
 import Confetti from "./Confetti";
+import { GiStarProminences } from "react-icons/gi";
 
 function Container() {
   // 初始化 data
@@ -22,6 +23,7 @@ function Container() {
     setState,
     isDev,
     setIsDev,
+    mines,
     blockArea,
     setBlockArea,
     mineGeneratedRef,
@@ -39,6 +41,7 @@ function Container() {
     setGameState({
       state,
       isDev,
+      mines,
       blockArea,
       mineGeneratedRef: mineGeneratedRef.current,
       gameStateRef: gameStateRef.current,
@@ -60,7 +63,10 @@ function Container() {
     if (!mineGeneratedRef.current) {
       setState(
         produce((draft) =>
-          updateNumber(generateMines(draft, { y, x }), blockArea),
+          updateNumber(
+            generateMines(draft, mines, blockArea, { y, x }),
+            blockArea,
+          ),
         ),
       );
       mineGeneratedRef.current = true;
@@ -100,6 +106,8 @@ function Container() {
     setBlockArea(newBlockArea);
     reset(newBlockArea);
   };
+  // 炸弹数
+  const minesCount = state.flat().reduce((a, b) => a + (b.mine ? 1 : 0), 0);
   return (
     <div className="flex flex-col items-center gap-2">
       {isShowSetting && (
@@ -128,6 +136,12 @@ function Container() {
             <AiFillEye className="h-8 w-8" />
           )}
         </button>
+      </div>
+      <div>
+        <div className="flex items-center gap-x-2 text-3xl">
+          <GiStarProminences />
+          <span>{minesCount}</span>
+        </div>
       </div>
       <div className="flex flex-col">
         {state.map((rows, y) => (

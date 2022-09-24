@@ -9,3 +9,8 @@
 - Tailwind CSS
 - immer
 - ahooks
+
+## 功能
+- 显示炸弹和数字
+- 调整宽高
+- 赢了显示烟花

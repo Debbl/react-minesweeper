@@ -1,7 +1,7 @@
 import { BlockArea, BlockState, GameStateRef } from "@/types";
 import type { MutableRefObject } from "react";
 import produce from "immer";
-import { directions } from "@/constants/constants";
+import { DIRECTIONS } from "@/constants/constants";
 
 // 初始化 state
 function initState(blockArea: BlockArea) {
@@ -21,21 +21,33 @@ function initState(blockArea: BlockArea) {
 // 生成炸弹
 function generateMines(
   state: BlockState[][],
+  mines: number,
+  blockArea: BlockArea,
   initial: { y: number; x: number },
 ) {
+  const randomRange = (min: number, max: number) => {
+    return Math.round(Math.random() * (max - min) + min);
+  };
+  const placeRandom = (state: BlockState[][]) => {
+    const cx = randomRange(0, blockArea.width - 1);
+    const cy = randomRange(0, blockArea.height - 1);
+    const block = state[cy][cx];
+    if (
+      Math.abs(initial.x - block.x) <= 1 ||
+      Math.abs(initial.y - block.y) <= 1
+    )
+      return false;
+    if (block.mine) return false;
+    block.mine = true;
+    return true;
+  };
   const newState = produce(state, (draft) => {
-    for (const rows of draft) {
-      for (const block of rows) {
-        if (Math.abs(initial.x - block.x) < 1) {
-          continue;
-        }
-        if (Math.abs(initial.y - block.y) < 1) {
-          continue;
-        }
-        block.mine = Math.random() < 0.3;
-      }
-    }
+    Array.from({ length: mines }).forEach(() => {
+      let placed = false;
+      while (!placed) placed = placeRandom(draft);
+    });
   });
+
   return newState;
 }
 // 更新格子周围的炸弹数
@@ -61,14 +73,12 @@ function getSiblings(
   blockArea: BlockArea,
 ) {
   const { width, height } = blockArea;
-  return directions
-    .map(([dx, dy]) => {
-      const x2 = block.x + dx;
-      const y2 = block.y + dy;
-      if (x2 < 0 || x2 >= width || y2 < 0 || y2 >= height) return;
-      return state[y2][x2];
-    })
-    .filter(Boolean) as BlockState[];
+  return DIRECTIONS.map(([dx, dy]) => {
+    const x2 = block.x + dx;
+    const y2 = block.y + dy;
+    if (x2 < 0 || x2 >= width || y2 < 0 || y2 >= height) return;
+    return state[y2][x2];
+  }).filter(Boolean) as BlockState[];
 }
 // 递归打开格子
 function expendZero(

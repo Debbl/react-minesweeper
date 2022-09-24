@@ -2,7 +2,7 @@ import { BlockArea, GameStateRef } from "./types";
 import { useState } from "react";
 import Container from "./components/Container";
 import MainContext from "./contexts/MainContext";
-import { defaultBlockArea } from "@/constants/constants";
+import { BLOCK_AREA } from "@/constants/constants";
 import { useRef } from "react";
 import { initState } from "./utils/MainUtils";
 import { useLocalStorageState } from "ahooks";
@@ -14,9 +14,10 @@ function App() {
     "minesweeper-game-state",
     {
       defaultValue: {
-        state: initState(defaultBlockArea),
+        state: initState(BLOCK_AREA),
         isDev: false,
-        blockArea: defaultBlockArea,
+        mines: 3,
+        blockArea: BLOCK_AREA,
         mineGeneratedRef: false,
         gameStateRef: GameStateRef.play,
       },
@@ -25,6 +26,7 @@ function App() {
   const [isDev, setIsDev] = useState(gameState.isDev);
   const [blockArea, setBlockArea] = useState<BlockArea>(gameState.blockArea);
   const [state, setState] = useState(gameState.state);
+  const [mines, setMines] = useState(gameState.mines);
   const mineGeneratedRef = useRef(gameState.mineGeneratedRef);
   const gameStateRef = useRef<GameStateRef>(gameState.gameStateRef);
 
@@ -36,6 +38,8 @@ function App() {
           setState,
           isDev,
           setIsDev,
+          mines,
+          setMines,
           blockArea,
           setBlockArea,
           mineGeneratedRef,

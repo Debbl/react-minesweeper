@@ -26,6 +26,8 @@ export interface GameState {
   setState: Dispatch<SetStateAction<BlockState[][]>>;
   isDev: boolean;
   setIsDev: Dispatch<SetStateAction<boolean>>;
+  mines: number;
+  setMines: Dispatch<SetStateAction<number>>;
   blockArea: BlockArea;
   setBlockArea: Dispatch<SetStateAction<BlockArea>>;
   mineGeneratedRef: MutableRefObject<boolean>;
@@ -38,6 +40,7 @@ export interface GameChangeState extends GameState {
       | {
           state: BlockState[][];
           isDev: boolean;
+          mines: number;
           blockArea: BlockArea;
           mineGeneratedRef: boolean;
           gameStateRef: GameStateRef;
@@ -45,6 +48,7 @@ export interface GameChangeState extends GameState {
       | IFuncUpdater<{
           state: BlockState[][];
           isDev: boolean;
+          mines: number;
           blockArea: BlockArea;
           mineGeneratedRef: boolean;
           gameStateRef: GameStateRef;

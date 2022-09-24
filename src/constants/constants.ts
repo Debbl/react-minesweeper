@@ -1,11 +1,12 @@
 import type { BlockArea } from "@/types";
 
-const defaultBlockArea: BlockArea = {
+const BLOCK_AREA: BlockArea = {
   width: 5,
   height: 5,
 };
+const MINES = 3;
 
-const directions = [
+const DIRECTIONS = [
   [-1, -1],
   [0, -1],
   [1, -1],
@@ -16,4 +17,4 @@ const directions = [
   [1, 1],
 ];
 
-export { defaultBlockArea, directions };
+export { BLOCK_AREA, DIRECTIONS, MINES };
