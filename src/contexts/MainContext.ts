@@ -1,15 +1,15 @@
 import { GameStateRef, GameChangeState } from "@/types";
 import { createContext } from "react";
-import { BLOCK_AREA } from "@/constants/constants";
+import { BLOCK_AREA, MINES } from "@/constants/constants";
 import { initState } from "@/utils/MainUtils";
 
 const MainContext = createContext<GameChangeState>({
-  state: initState({ width: 5, height: 5 }),
+  state: initState(BLOCK_AREA),
   setState: () => undefined,
   isDev: false,
   setIsDev: () => undefined,
   blockArea: BLOCK_AREA,
-  mines: 3,
+  mines: MINES,
   setMines: () => undefined,
   setBlockArea: () => undefined,
   mineGeneratedRef: { current: false },

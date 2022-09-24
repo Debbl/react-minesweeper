@@ -2,7 +2,7 @@ import { BlockArea, GameStateRef } from "./types";
 import { useState } from "react";
 import Container from "./components/Container";
 import MainContext from "./contexts/MainContext";
-import { BLOCK_AREA } from "@/constants/constants";
+import { BLOCK_AREA, MINES } from "@/constants/constants";
 import { useRef } from "react";
 import { initState } from "./utils/MainUtils";
 import { useLocalStorageState } from "ahooks";
@@ -16,7 +16,7 @@ function App() {
       defaultValue: {
         state: initState(BLOCK_AREA),
         isDev: false,
-        mines: 3,
+        mines: MINES,
         blockArea: BLOCK_AREA,
         mineGeneratedRef: false,
         gameStateRef: GameStateRef.play,
