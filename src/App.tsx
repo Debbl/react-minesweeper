@@ -31,7 +31,7 @@ function App() {
   const gameStateRef = useRef<GameStateRef>(gameState.gameStateRef);
 
   return (
-    <div className="box-border flex h-screen flex-col items-center justify-start overflow-auto pt-[5%] font-sans dark:bg-slate-800 dark:text-white">
+    <div className="h-screen overflow-auto py-[5%] text-center font-sans dark:bg-slate-800 dark:text-white">
       <MainContext.Provider
         value={{
           state,
@@ -47,8 +47,10 @@ function App() {
           setGameState,
         }}
       >
-        <Container />
-        <Footer />
+        <div className="inline-block">
+          <Container />
+          <Footer />
+        </div>
       </MainContext.Provider>
     </div>
   );

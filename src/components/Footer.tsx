@@ -17,7 +17,7 @@ function Footer() {
     }
   }, [isDark]);
   return (
-    <div className="flex gap-2 py-4 text-2xl">
+    <div className="flex justify-center gap-x-3 text-2xl">
       <div>
         <button onClick={() => setIsDark(!isDark)}>
           {isDark ? (
