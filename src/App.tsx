@@ -29,7 +29,7 @@ function App() {
   const gameStateRef = useRef<GameStateRef>(gameState.gameStateRef);
 
   return (
-    <div className="box-border flex h-screen flex-col items-center justify-start pt-[5%] font-sans dark:bg-slate-800 dark:text-white">
+    <div className="box-border flex h-screen flex-col items-center justify-start overflow-auto pt-[5%] font-sans dark:bg-slate-800 dark:text-white">
       <MainContext.Provider
         value={{
           state,
