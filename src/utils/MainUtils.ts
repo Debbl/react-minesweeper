@@ -98,9 +98,6 @@ function checkGameState(
       )
     ) {
       if (gameStateRef.current === GameStateRef.play) {
-        setTimeout(() => {
-          alert("You win!");
-        });
         gameStateRef.current = GameStateRef.won;
       }
     } else {

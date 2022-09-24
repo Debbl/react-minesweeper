@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/canvas-confetti': ^1.4.3
   '@types/lodash': ^4.14.185
   '@types/node': ^18.7.18
   '@types/react': ^18.0.17
@@ -10,6 +11,7 @@ specifiers:
   '@vitejs/plugin-react': ^2.1.0
   ahooks: ^3.7.1
   autoprefixer: ^10.4.12
+  canvas-confetti: ^1.5.1
   clsx: ^1.2.1
   eslint: ^8.23.1
   eslint-config-prettier: ^8.5.0
@@ -28,9 +30,11 @@ specifiers:
   vite: ^3.1.0
 
 dependencies:
+  '@types/canvas-confetti': 1.4.3
   '@types/lodash': 4.14.185
   '@types/node': 18.7.18
   ahooks: 3.7.1_react@18.2.0
+  canvas-confetti: 1.5.1
   clsx: 1.2.1
   immer: 9.0.15
   lodash: 4.17.21
@@ -434,6 +438,10 @@ packages:
       fastq: 1.13.0
     dev: true
 
+  /@types/canvas-confetti/1.4.3:
+    resolution: {integrity: sha512-UwFPTsW1ZwVyo/ETp4hPSikSD7yl2V42E3VWBF5P/0+DHO4iajyceWv7hfNdZ2AX5tkZnuViiBWOqyCPohU2FQ==}
+    dev: false
+
   /@types/js-cookie/2.2.7:
     resolution: {integrity: sha512-aLkWa0C0vO5b4Sr798E26QgOkss68Un0bLjs7u9qxzPT5CG+8DuNTffWES58YzJs3hrVAOs1wonycqEBqNJubA==}
     dev: false
@@ -814,6 +822,10 @@ packages:
   /caniuse-lite/1.0.30001407:
     resolution: {integrity: sha512-4ydV+t4P7X3zH83fQWNDX/mQEzYomossfpViCOx9zHBSMV+rIe3LFqglHHtVyvNl1FhTNxPxs3jei82iqOW04w==}
     dev: true
+
+  /canvas-confetti/1.5.1:
+    resolution: {integrity: sha512-Ncz+oZJP6OvY7ti4E1slxVlyAV/3g7H7oQtcCDXgwGgARxPnwYY9PW5Oe+I8uvspYNtuHviAdgA0LfcKFWJfpg==}
+    dev: false
 
   /chalk/2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}

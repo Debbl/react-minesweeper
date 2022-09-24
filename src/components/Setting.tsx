@@ -1,5 +1,5 @@
 import type { BlockArea } from "@/types";
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction, MouseEvent } from "react";
 
 interface ISetting {
   changeBlockArea: (x: number, y: number) => void;
@@ -8,8 +8,14 @@ interface ISetting {
 }
 
 function Setting({ changeBlockArea, setIsShowSetting, blockArea }: ISetting) {
+  const closeSetting = (e: MouseEvent) => {
+    if (e.target === e.currentTarget) setIsShowSetting(false);
+  };
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-slate-400/50">
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-slate-400/50"
+      onClick={(e) => closeSetting(e)}
+    >
       <div className="relative flex h-80 w-80 flex-col items-center justify-center gap-y-3 rounded-xl bg-teal-600/20">
         <button
           className="btn absolute right-3 top-3"

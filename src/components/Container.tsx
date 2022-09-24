@@ -13,6 +13,7 @@ import {
   showAllMines,
 } from "@/utils/MainUtils";
 import Setting from "./Setting";
+import Confetti from "./Confetti";
 
 function Container() {
   // 初始化 data
@@ -108,6 +109,7 @@ function Container() {
           blockArea={blockArea}
         />
       )}
+      <Confetti passed={gameStateRef.current === GameStateRef.won} />
       <div className="text-2xl font-bold">扫雷</div>
       <div className="flex h-8 w-60 justify-evenly text-green-600/50">
         <button className="btn" onClick={() => reset(blockArea)}>
