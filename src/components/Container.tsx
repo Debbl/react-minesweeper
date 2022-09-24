@@ -24,6 +24,7 @@ function Container() {
     isDev,
     setIsDev,
     mines,
+    setMines,
     blockArea,
     setBlockArea,
     mineGeneratedRef,
@@ -103,15 +104,29 @@ function Container() {
       width: blockArea.width + x,
       height: blockArea.height + y,
     };
+    if (mines > newBlockArea.width * newBlockArea.height - 9) {
+      setMines(newBlockArea.width * newBlockArea.height - 9);
+    }
     setBlockArea(newBlockArea);
     reset(newBlockArea);
   };
+  // 改变炸弹数
+  const changeMines = (count: number) => {
+    const newMines = mines + count;
+    if (newMines < 1 || newMines > blockArea.width * blockArea.height - 9)
+      return;
+    setMines(newMines);
+    reset(blockArea);
+  };
   // 炸弹数
-  const minesCount = state.flat().reduce((a, b) => a + (b.mine ? 1 : 0), 0);
+  const minesCount =
+    mines - state.flat().reduce((a, b) => a + (b.flagged ? 1 : 0), 0);
   return (
     <div className="flex flex-col items-center gap-2">
       {isShowSetting && (
         <Setting
+          mines={mines}
+          changeMines={changeMines}
           changeBlockArea={changeBlockArea}
           setIsShowSetting={setIsShowSetting}
           blockArea={blockArea}

@@ -33,7 +33,7 @@ function generateMines(
     const cy = randomRange(0, blockArea.height - 1);
     const block = state[cy][cx];
     if (
-      Math.abs(initial.x - block.x) <= 1 ||
+      Math.abs(initial.x - block.x) <= 1 &&
       Math.abs(initial.y - block.y) <= 1
     )
       return false;
