@@ -1,6 +1,6 @@
 import { MouseEvent, useContext } from "react";
 import type { BlockState } from "@/types";
-import { GiMineExplosion, RiFlagFill } from "react-icons/all";
+import { GiStarProminences, RiFlagFill } from "react-icons/all";
 import MainContext from "@/contexts/MainContext";
 
 // 数字的样式
@@ -44,7 +44,7 @@ function Block(props: BlockType) {
         {block.flagged ? (
           <RiFlagFill className="text-red-700" />
         ) : block.mine ? (
-          (block.revealed || isDev) && <GiMineExplosion />
+          (block.revealed || isDev) && <GiStarProminences />
         ) : (
           (block.revealed || isDev) && block.adjacentMines
         )}
