@@ -1,4 +1,4 @@
-# React Minesweeper
+# [扫雷 React Minesweeper](https://game.aiwan.run/minesweeper/)
 
 > 教程： https://github.com/antfu/vue-minesweeper
 
