@@ -1,6 +1,6 @@
 # [扫雷 React Minesweeper](https://game.aiwan.run/minesweeper/)
 
-> 教程： https://github.com/antfu/vue-minesweeper
+> 教程： [antfu/vue-minesweeper](https://github.com/antfu/vue-minesweeper)
 
 ## 技术栈
 
