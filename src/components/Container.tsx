@@ -42,8 +42,8 @@ function Container() {
           <button className="btn" onClick={() => msGame.changeMode("medium")}>中等</button>
           <button className="btn" onClick={() => msGame.changeMode("hard")}>困难</button>
         </div>
-        <div className="item-center flex w-full justify-evenly">
-          <div className="w-18 flex items-center justify-between text-3xl">
+        <div className="flex w-full justify-evenly">
+          <div className="flex w-16 items-center justify-between text-3xl">
             <Icon icon="mdi:mine" />
             <span className="w-8">{mineCount}</span>
           </div>
