@@ -32,6 +32,7 @@ function Container() {
   return (
     <div className="inline-flex flex-col items-center gap-2 p-8">
       <Confetti passed={gameStatus === "won"} />
+      <div className="text-3xl font-medium">扫雷</div>
       <div className="w-80 flex flex-col h-20 justify-between">
         <div className="flex justify-evenly">
           <button className="btn" onClick={msGame.reset}>
