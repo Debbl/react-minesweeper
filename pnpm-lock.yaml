@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@debbl/eslint-config-react': 0.0.15
+  '@iconify-icon/react': ^1.0.0
   '@types/canvas-confetti': ^1.4.3
   '@types/node': ^18.7.18
   '@types/react': ^18.0.17
@@ -41,6 +42,7 @@ dependencies:
 
 devDependencies:
   '@debbl/eslint-config-react': 0.0.15_irgkl5vooow2ydyo6aokmferha
+  '@iconify-icon/react': 1.0.0_react@18.2.0
   '@types/canvas-confetti': 1.4.3
   '@types/node': 18.7.18
   '@types/react': 18.0.20
@@ -434,6 +436,19 @@ packages:
 
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+    dev: true
+
+  /@iconify-icon/react/1.0.0_react@18.2.0:
+    resolution: {integrity: sha512-tGFGohB415e9tbPT6mvVicngBbunel/AnYyKiCVs1mNhAs8yNQ8IAuixepIPlCeTHrXbmZ9oQEx+Hxg9MIsZ9g==}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      iconify-icon: 1.0.0
+      react: 18.2.0
+    dev: true
+
+  /@iconify/types/2.0.0:
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
     dev: true
 
   /@jridgewell/gen-mapping/0.1.1:
@@ -2195,6 +2210,12 @@ packages:
       entities: 4.4.0
     dev: true
 
+  /iconify-icon/1.0.0:
+    resolution: {integrity: sha512-UY4PDCKQPpIGgDIx2yxM8wiOdMdLz0mb93dTV0Ox5hThwO8OA2zy8gDmjRReKqkPHK/mY7p/ivDaDGHE8O9xIw==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /ignore/5.2.0:
     resolution: {integrity: sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==}
     engines: {node: '>= 4'}
@@ -2928,7 +2949,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /read-cache/1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}

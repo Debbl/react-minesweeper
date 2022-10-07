@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@debbl/eslint-config-react": "0.0.15",
+    "@iconify-icon/react": "^1.0.0",
     "@types/canvas-confetti": "^1.4.3",
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.17",

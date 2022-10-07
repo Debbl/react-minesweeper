@@ -1,3 +1,4 @@
+import type { MouseEvent } from "react";
 import EventBus from "./EventBus";
 import { DIRECTIONS } from "@/constants/constants";
 export interface BlockState {
@@ -13,7 +14,7 @@ export interface BoardArea {
   height: number;
 }
 
-type GameStatus = "play" | "won" | "lost";
+type GameStatus = "ready" | "play" | "won" | "lost";
 
 export interface GameState {
   board: BlockState[][];
@@ -39,9 +40,12 @@ class MSGame extends EventBus<Events> {
     this.emit("change", { ...this.gameState });
   }
 
-  // 重置棋盘
+  // 初始化棋盘
   protected initBoard() {
     const { width, height } = this.gameState.boardArea;
+    const { gameState } = this;
+    gameState.mineGenerated = false;
+    gameState.gameStatus = "ready";
     this.gameState.board = Array.from({ length: height }, (_, y) =>
       Array.from(
         { length: width },
@@ -120,10 +124,21 @@ class MSGame extends EventBus<Events> {
     });
   }
 
+  // 显示所有炸弹格子
+  protected showAllBlock() {
+    const { board } = this.gameState;
+    board.forEach((rows) => {
+      rows.forEach((block) => {
+        if (block.mine) block.revealed = true;
+      });
+    });
+  }
+
+  // 点击
   onClick = (block: BlockState) => {
     const { gameState } = this;
     const { board } = gameState;
-    if (gameState.gameStatus !== "play") return;
+    if (gameState.gameStatus !== "play" && gameState.gameStatus !== "ready") return;
     const { y, x } = block;
     if (board[y][x].flagged) return;
     if (board[y][x].mine) {
@@ -131,11 +146,12 @@ class MSGame extends EventBus<Events> {
         alert("BOOM!");
       });
       gameState.gameStatus = "lost";
-      return;
+      this.showAllBlock();
     }
     if (!gameState.mineGenerated) {
       this.generateMines({ x: block.x, y: block.y });
       this.updateNumber();
+      gameState.gameStatus = "play";
       gameState.mineGenerated = true;
     }
     board[y][x].revealed = true;
@@ -143,7 +159,21 @@ class MSGame extends EventBus<Events> {
     this.setGameState();
   };
 
-  onContextMenu() {}
+  // 右键点击
+  onContextMenu = (e: MouseEvent, block: BlockState) => {
+    e.preventDefault();
+    const { board, gameStatus } = this.gameState;
+    if (gameStatus !== "play") return;
+    const { y, x } = block;
+    board[y][x].flagged = true;
+    this.setGameState();
+  };
+
+  // 新游戏
+  reset = () => {
+    this.initBoard();
+    this.setGameState();
+  };
 }
 
 export default MSGame;
