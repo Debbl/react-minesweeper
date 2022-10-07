@@ -1,11 +1,11 @@
 import type { Dispatch, MouseEvent, SetStateAction } from "react";
-import type { BlockArea } from "~/types";
+import type { BoardArea } from "~/types";
 
 interface ISetting {
   changeBlockArea: (x: number, y: number) => void;
   changeMines: (count: number) => void;
   setIsShowSetting: Dispatch<SetStateAction<boolean>>;
-  blockArea: BlockArea;
+  blockArea: BoardArea;
   mines: number;
 }
 

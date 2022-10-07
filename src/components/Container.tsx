@@ -3,19 +3,19 @@ import { useEffect, useRef } from "react";
 import { Icon } from "@iconify-icon/react";
 import Block from "./Block";
 import Confetti from "./Confetti";
-import type { GameState } from "~/utils/MSGame";
 import MSGame from "~/utils/MSGame";
 import { initState } from "~/utils/MainUtils";
-import { BLOCK_AREA, MINES } from "~/constants/constants";
+import { BOARD_AREA, MINES } from "~/constants/constants";
+import type { GameState } from "~/types";
 
 function Container() {
   const [gameState, setGameState] = useLocalStorageState<GameState>(
     "minesweeper-info",
     {
       defaultValue: {
-        board: initState(BLOCK_AREA),
+        board: initState(BOARD_AREA),
         isDev: true,
-        boardArea: BLOCK_AREA,
+        boardArea: BOARD_AREA,
         gameStatus: "play",
         mineGenerated: false,
         mines: MINES,

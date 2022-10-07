@@ -1,29 +1,8 @@
 import type { MouseEvent } from "react";
 import EventBus from "./EventBus";
+import { randomRange } from "./MainUtils";
 import { DIRECTIONS } from "~/constants/constants";
-export interface BlockState {
-  x: number;
-  y: number;
-  revealed?: boolean;
-  mine?: boolean;
-  flagged?: boolean;
-  adjacentMines: number;
-}
-export interface BoardArea {
-  width: number;
-  height: number;
-}
-
-type GameStatus = "ready" | "play" | "won" | "lost";
-
-export interface GameState {
-  board: BlockState[][];
-  isDev: boolean;
-  mines: number;
-  boardArea: BoardArea;
-  mineGenerated: boolean;
-  gameStatus: GameStatus;
-}
+import type { BlockState, GameState } from "~/types";
 
 interface Events {
   change: GameState;
@@ -60,10 +39,6 @@ class MSGame extends EventBus<Events> {
     );
   }
 
-  protected randomRange(min: number, max: number) {
-    return Math.round(Math.random() * (max - min) + min);
-  }
-
   // 获取每个格子周围的 格子数组
   protected getSiblings(block: BlockState) {
     const { width, height } = this.gameState.boardArea;
@@ -92,9 +67,6 @@ class MSGame extends EventBus<Events> {
   // 生成炸弹
   protected generateMines(initial: { y: number; x: number; }) {
     const { boardArea, mines, board } = this.gameState;
-    const randomRange = (min: number, max: number) => {
-      return Math.round(Math.random() * (max - min) + min);
-    };
     const placeRandom = (state: BlockState[][]) => {
       const cx = randomRange(0, boardArea.width - 1);
       const cy = randomRange(0, boardArea.height - 1);
@@ -140,13 +112,6 @@ class MSGame extends EventBus<Events> {
     const { gameState } = this;
     const { board, gameStatus } = this.gameState;
     const blocks = board.flat();
-    // if (blocks.every((block) => block.revealed || block.mine)) {
-    //   if (gameStateRef.current === GameStateRef.play) {
-    //     gameStateRef.current = GameStateRef.won;
-    //   }
-    // } else {
-    //   gameStateRef.current = GameStateRef.play;
-    // }
 
     if (blocks.every((block) => block.revealed || block.flagged)) {
       if (
