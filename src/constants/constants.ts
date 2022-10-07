@@ -1,6 +1,6 @@
-import type { BlockArea } from "@/types";
+import type { BoardArea } from "~/types";
 
-const BLOCK_AREA: BlockArea = {
+const BOARD_AREA: BoardArea = {
   width: 9,
   height: 9,
 };
@@ -17,4 +17,4 @@ const DIRECTIONS = [
   [1, 1],
 ];
 
-export { BLOCK_AREA, DIRECTIONS, MINES };
+export { BOARD_AREA, DIRECTIONS, MINES };

@@ -1,6 +1,3 @@
-import { IFuncUpdater } from "ahooks/lib/createUseStorageState";
-import type { Dispatch, SetStateAction, MutableRefObject } from "react";
-
 export interface BlockState {
   x: number;
   y: number;
@@ -9,49 +6,19 @@ export interface BlockState {
   flagged?: boolean;
   adjacentMines: number;
 }
-
-export interface BlockArea {
+export interface BoardArea {
   width: number;
   height: number;
 }
 
-export enum GameStateRef {
-  "play",
-  "won",
-  "lost",
-}
+export type GameStatus = "ready" | "play" | "won" | "lost";
+export type Mode = "easy" | "medium" | "hard";
 
 export interface GameState {
-  state: BlockState[][];
-  setState: Dispatch<SetStateAction<BlockState[][]>>;
+  board: BlockState[][];
   isDev: boolean;
-  setIsDev: Dispatch<SetStateAction<boolean>>;
   mines: number;
-  setMines: Dispatch<SetStateAction<number>>;
-  blockArea: BlockArea;
-  setBlockArea: Dispatch<SetStateAction<BlockArea>>;
-  mineGeneratedRef: MutableRefObject<boolean>;
-  gameStateRef: MutableRefObject<GameStateRef>;
-}
-
-export interface GameChangeState extends GameState {
-  setGameState: (
-    value:
-      | {
-          state: BlockState[][];
-          isDev: boolean;
-          mines: number;
-          blockArea: BlockArea;
-          mineGeneratedRef: boolean;
-          gameStateRef: GameStateRef;
-        }
-      | IFuncUpdater<{
-          state: BlockState[][];
-          isDev: boolean;
-          mines: number;
-          blockArea: BlockArea;
-          mineGeneratedRef: boolean;
-          gameStateRef: GameStateRef;
-        }>,
-  ) => void;
+  boardArea: BoardArea;
+  mineGenerated: boolean;
+  gameStatus: GameStatus;
 }
