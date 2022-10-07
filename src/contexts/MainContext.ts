@@ -1,5 +1,6 @@
-import { GameStateRef, GameChangeState } from "@/types";
 import { createContext } from "react";
+import { GameStateRef } from "@/types";
+import type { GameChangeState } from "@/types";
 import { BLOCK_AREA, MINES } from "@/constants/constants";
 import { initState } from "@/utils/MainUtils";
 

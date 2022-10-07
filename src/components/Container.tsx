@@ -1,20 +1,22 @@
-import { BlockState, GameStateRef } from "@/types";
-import { MouseEvent, useContext, useEffect, useState } from "react";
+import type { MouseEvent } from "react";
+import { useContext, useEffect, useState } from "react";
 import produce from "immer";
-import Block from "./Block";
-import MainContext from "@/contexts/MainContext";
-import { AiFillEyeInvisible, AiFillEye, AiFillSetting } from "react-icons/ai";
-import {
-  initState,
-  updateNumber,
-  generateMines,
-  expendZero,
-  checkGameState,
-  showAllMines,
-} from "@/utils/MainUtils";
+import { AiFillEye, AiFillEyeInvisible, AiFillSetting } from "react-icons/ai";
+import { GiStarProminences } from "react-icons/gi";
 import Setting from "./Setting";
 import Confetti from "./Confetti";
-import { GiStarProminences } from "react-icons/gi";
+import Block from "./Block";
+import {
+  checkGameState,
+  expendZero,
+  generateMines,
+  initState,
+  showAllMines,
+  updateNumber,
+} from "@/utils/MainUtils";
+import MainContext from "@/contexts/MainContext";
+import { GameStateRef } from "@/types";
+import type { BlockState } from "@/types";
 
 function Container() {
   // 初始化 data
@@ -47,7 +49,7 @@ function Container() {
       mineGeneratedRef: mineGeneratedRef.current,
       gameStateRef: gameStateRef.current,
     });
-  }, [state, isDev, blockArea, mineGeneratedRef.current, gameStateRef.current]);
+  }, [state, isDev, blockArea, setGameState, mines, mineGeneratedRef, gameStateRef]);
   // 点击
   const onClick = (block: BlockState) => {
     if (gameStateRef.current !== GameStateRef.play) return;
@@ -86,14 +88,13 @@ function Container() {
     const { y, x } = block;
     setState(
       produce(state, (draft) => {
-        if (!draft[y][x].revealed) {
+        if (!draft[y][x].revealed)
           draft[y][x].flagged = !draft[y][x].flagged;
-        }
       }),
     );
   };
   // 重置游戏
-  const reset = (blockArea: { width: number; height: number }) => {
+  const reset = (blockArea: { width: number; height: number; }) => {
     setState(initState(blockArea));
     mineGeneratedRef.current = false;
     gameStateRef.current = GameStateRef.play;
@@ -101,18 +102,16 @@ function Container() {
   // 改变宽高
   const changeBlockArea = (x: number, y: number, flag?: boolean) => {
     if (blockArea.width + x <= 3 || blockArea.height + y <= 3) return;
-    const newBlockArea = flag
-      ? {
-          width: x,
-          height: y,
-        }
-      : {
-          width: blockArea.width + x,
-          height: blockArea.height + y,
-        };
-    if (mines > newBlockArea.width * newBlockArea.height - 9) {
+    const newBlockArea = flag ? {
+      width: x,
+      height: y,
+    } : {
+      width: blockArea.width + x,
+      height: blockArea.height + y,
+    };
+    if (mines > newBlockArea.width * newBlockArea.height - 9)
       setMines(newBlockArea.width * newBlockArea.height - 9);
-    }
+
     setBlockArea(newBlockArea);
     reset(newBlockArea);
   };
@@ -134,8 +133,8 @@ function Container() {
     reset({ width: x, height: y });
   };
   // 炸弹数
-  const minesCount =
-    mines - state.flat().reduce((a, b) => a + (b.flagged ? 1 : 0), 0);
+  const minesCount
+    = mines - state.flat().reduce((a, b) => a + (b.flagged ? 1 : 0), 0);
   return (
     <div className="inline-flex flex-col items-center gap-2 p-8">
       {isShowSetting && (

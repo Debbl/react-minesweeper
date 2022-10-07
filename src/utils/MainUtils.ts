@@ -1,6 +1,7 @@
-import { BlockArea, BlockState, GameStateRef } from "@/types";
 import type { MutableRefObject } from "react";
 import produce from "immer";
+import type { BlockArea, BlockState } from "@/types";
+import { GameStateRef } from "@/types";
 import { DIRECTIONS } from "@/constants/constants";
 
 // 初始化 state
@@ -23,7 +24,7 @@ function generateMines(
   state: BlockState[][],
   mines: number,
   blockArea: BlockArea,
-  initial: { y: number; x: number },
+  initial: { y: number; x: number; },
 ) {
   const randomRange = (min: number, max: number) => {
     return Math.round(Math.random() * (max - min) + min);
@@ -33,8 +34,8 @@ function generateMines(
     const cy = randomRange(0, blockArea.height - 1);
     const block = state[cy][cx];
     if (
-      Math.abs(initial.x - block.x) <= 1 &&
-      Math.abs(initial.y - block.y) <= 1
+      Math.abs(initial.x - block.x) <= 1
+      && Math.abs(initial.y - block.y) <= 1
     )
       return false;
     if (block.mine) return false;
@@ -57,9 +58,7 @@ function updateNumber(state: BlockState[][], blockArea: BlockArea) {
       rows.forEach((block) => {
         if (block.mine) return;
         getSiblings(block, draft, blockArea).forEach((otherMine) => {
-          if (otherMine.mine) {
-            block.adjacentMines++;
-          }
+          if (otherMine.mine) block.adjacentMines++;
         });
       });
     });
@@ -76,7 +75,7 @@ function getSiblings(
   return DIRECTIONS.map(([dx, dy]) => {
     const x2 = block.x + dx;
     const y2 = block.y + dy;
-    if (x2 < 0 || x2 >= width || y2 < 0 || y2 >= height) return;
+    if (x2 < 0 || x2 >= width || y2 < 0 || y2 >= height) return false;
     return state[y2][x2];
   }).filter(Boolean) as BlockState[];
 }
@@ -115,9 +114,8 @@ function checkGameState(
           (block.revealed && !block.mine) || (block.flagged && block.mine),
       )
     ) {
-      if (gameStateRef.current === GameStateRef.play) {
+      if (gameStateRef.current === GameStateRef.play)
         gameStateRef.current = GameStateRef.won;
-      }
     } else {
       if (gameStateRef.current === GameStateRef.play)
         setTimeout(() => alert("You cheat"));

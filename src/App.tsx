@@ -1,12 +1,12 @@
-import { BlockArea, GameStateRef } from "./types";
-import { useState } from "react";
-import Container from "./components/Container";
-import MainContext from "./contexts/MainContext";
-import { BLOCK_AREA, MINES } from "@/constants/constants";
-import { useRef } from "react";
-import { initState } from "./utils/MainUtils";
+import { useRef, useState } from "react";
 import { useLocalStorageState } from "ahooks";
+import type { BlockArea } from "./types";
+import { GameStateRef } from "./types";
+import MainContext from "./contexts/MainContext";
+import { initState } from "./utils/MainUtils";
 import Footer from "./components/Footer";
+import Container1 from "./components/Container1";
+import { BLOCK_AREA, MINES } from "@/constants/constants";
 
 function App() {
   // 持久化
@@ -48,7 +48,8 @@ function App() {
         }}
       >
         <div className="inline-block">
-          <Container />
+          {/* <Container /> */}
+          <Container1 />
           <Footer />
         </div>
       </MainContext.Provider>

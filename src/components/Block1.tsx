@@ -1,9 +1,6 @@
-import type { MouseEvent } from "react";
-import { useContext } from "react";
 import { GiStarProminences, RiFlagFill } from "react-icons/all";
+import type { MouseEvent } from "react";
 import type { BlockState } from "@/types";
-import MainContext from "@/contexts/MainContext";
-
 // 数字的样式
 const numberColors = [
   "text-transparent",
@@ -27,11 +24,11 @@ function getBlockClassName(block: BlockState) {
 interface BlockType {
   onClick: (block: BlockState) => void;
   onContextMenu: (e: MouseEvent, block: BlockState) => void;
+  isDev: boolean;
   block: BlockState;
 }
 function Block(props: BlockType) {
-  const { onClick, onContextMenu, block } = props;
-  const { isDev } = useContext(MainContext);
+  const { block, onClick, onContextMenu, isDev } = props;
   return (
     <>
       <button
