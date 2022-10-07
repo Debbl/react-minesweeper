@@ -1,6 +1,6 @@
 import type { MouseEvent } from "react";
 import EventBus from "./EventBus";
-import { randomRange } from "./MainUtils";
+import { initState, randomRange } from "./MainUtils";
 import { DIRECTIONS } from "~/constants/constants";
 import type { BlockState, GameState, Mode } from "~/types";
 
@@ -22,21 +22,10 @@ class MSGame extends EventBus<Events> {
 
   // 初始化棋盘
   protected initBoard() {
-    const { width, height } = this.gameState.boardArea;
     const { gameState } = this;
     gameState.mineGenerated = false;
     gameState.gameStatus = "ready";
-    this.gameState.board = Array.from({ length: height }, (_, y) =>
-      Array.from(
-        { length: width },
-        (_, x): BlockState => ({
-          x,
-          y,
-          adjacentMines: 0,
-          revealed: false,
-        }),
-      ),
-    );
+    this.gameState.board = initState(this.gameState.boardArea);
   }
 
   // 获取每个格子周围的 格子数组
