@@ -30,10 +30,10 @@ function Container() {
     return msGame.on("change", setGameState);
   }, []);
   return (
-    <div className="inline-flex flex-col items-center gap-2 p-8">
+    <div className="inline-flex select-none flex-col items-center gap-2 p-8">
       <Confetti passed={gameStatus === "won"} />
       <div className="text-3xl font-medium">扫雷</div>
-      <div className="w-80 flex flex-col h-20 justify-between">
+      <div className="flex h-20 w-80 flex-col justify-between">
         <div className="flex justify-evenly">
           <button className="btn" onClick={msGame.reset}>
             新游戏
@@ -42,12 +42,12 @@ function Container() {
           <button className="btn" onClick={() => msGame.changeMode("medium")}>中等</button>
           <button className="btn" onClick={() => msGame.changeMode("hard")}>困难</button>
         </div>
-        <div className="flex w-full justify-evenly item-center">
-          <div className="flex items-center justify-between text-3xl w-18">
+        <div className="item-center flex w-full justify-evenly">
+          <div className="w-18 flex items-center justify-between text-3xl">
             <Icon icon="mdi:mine" />
             <span className="w-8">{mineCount}</span>
           </div>
-          <div className="text-3xl flex items-center" onClick={msGame.toggleDev}>
+          <div className="flex items-center text-3xl" onClick={msGame.toggleDev}>
             {isDev ? (
               <Icon icon="akar-icons:eye-closed" />
             ) : (
