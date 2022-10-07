@@ -32,20 +32,27 @@ function Container() {
   return (
     <div className="inline-flex flex-col items-center gap-2 p-8">
       <Confetti passed={gameStatus === "won"} />
-      <div className="flex w-full justify-evenly item-center">
-        <div className="flex items-center justify-between text-3xl w-18">
-          <Icon icon="mdi:mine" />
-          <span className="w-8">{mineCount}</span>
+      <div className="w-80 flex flex-col h-20 justify-between">
+        <div className="flex justify-evenly">
+          <button className="btn" onClick={msGame.reset}>
+            新游戏
+          </button>
+          <button className="btn" onClick={() => msGame.changeMode("easy")}>简单</button>
+          <button className="btn" onClick={() => msGame.changeMode("medium")}>中等</button>
+          <button className="btn" onClick={() => msGame.changeMode("hard")}>困难</button>
         </div>
-        <button className="btn" onClick={msGame.reset}>
-          新游戏
-        </button>
-        <div className="text-3xl flex items-center" onClick={msGame.toggleDev}>
-          {isDev ? (
-            <Icon icon="akar-icons:eye-closed" />
-          ) : (
-            <Icon icon="akar-icons:eye" />
-          )}
+        <div className="flex w-full justify-evenly item-center">
+          <div className="flex items-center justify-between text-3xl w-18">
+            <Icon icon="mdi:mine" />
+            <span className="w-8">{mineCount}</span>
+          </div>
+          <div className="text-3xl flex items-center" onClick={msGame.toggleDev}>
+            {isDev ? (
+              <Icon icon="akar-icons:eye-closed" />
+            ) : (
+              <Icon icon="akar-icons:eye" />
+            )}
+          </div>
         </div>
       </div>
       <div className="flex flex-col">

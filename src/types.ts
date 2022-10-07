@@ -12,6 +12,7 @@ export interface BoardArea {
 }
 
 export type GameStatus = "ready" | "play" | "won" | "lost";
+export type Mode = "easy" | "medium" | "hard";
 
 export interface GameState {
   board: BlockState[][];

@@ -2,7 +2,7 @@ import type { MouseEvent } from "react";
 import EventBus from "./EventBus";
 import { randomRange } from "./MainUtils";
 import { DIRECTIONS } from "~/constants/constants";
-import type { BlockState, GameState } from "~/types";
+import type { BlockState, GameState, Mode } from "~/types";
 
 interface Events {
   change: GameState;
@@ -129,6 +129,13 @@ class MSGame extends EventBus<Events> {
     }
   }
 
+  // 改变棋盘
+  protected changeBoard(w: number, h: number, m: number) {
+    const { gameState } = this;
+    gameState.boardArea = { width: w, height: h };
+    gameState.mines = m;
+  }
+
   // 点击
   onClick = (block: BlockState) => {
     const { gameState } = this;
@@ -170,6 +177,22 @@ class MSGame extends EventBus<Events> {
     const { gameState } = this;
     gameState.isDev = !gameState.isDev;
     this.setGameState();
+  };
+
+  // 改变模式
+  changeMode = (mode: Mode) => {
+    switch (mode) {
+      case "easy":
+        this.changeBoard(9, 9, 10);
+        break;
+      case "medium":
+        this.changeBoard(16, 16, 40);
+        break;
+      case "hard":
+        this.changeBoard(16, 30, 99);
+        break;
+    }
+    this.reset();
   };
 
   // 新游戏
