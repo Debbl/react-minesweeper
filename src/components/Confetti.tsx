@@ -1,6 +1,6 @@
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
-function Confetti({ passed }: { passed: boolean }) {
+function Confetti({ passed }: { passed: boolean; }) {
   const congrats = () => {
     const defaults = {
       colors: ["#5D8C7B", "#F2D091", "#F2A679", "#D9695F", "#8C4646"],

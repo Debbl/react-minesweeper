@@ -1,6 +1,6 @@
 import type { MouseEvent } from "react";
 import EventBus from "./EventBus";
-import { DIRECTIONS } from "@/constants/constants";
+import { DIRECTIONS } from "~/constants/constants";
 export interface BlockState {
   x: number;
   y: number;
@@ -37,6 +37,7 @@ class MSGame extends EventBus<Events> {
   }
 
   protected setGameState() {
+    this.checkGameState();
     this.emit("change", { ...this.gameState });
   }
 
@@ -134,11 +135,41 @@ class MSGame extends EventBus<Events> {
     });
   }
 
+  // 检查游戏进度
+  protected checkGameState() {
+    const { gameState } = this;
+    const { board, gameStatus } = this.gameState;
+    const blocks = board.flat();
+    // if (blocks.every((block) => block.revealed || block.mine)) {
+    //   if (gameStateRef.current === GameStateRef.play) {
+    //     gameStateRef.current = GameStateRef.won;
+    //   }
+    // } else {
+    //   gameStateRef.current = GameStateRef.play;
+    // }
+
+    if (blocks.every((block) => block.revealed || block.flagged)) {
+      if (
+        blocks.every(
+          (block) =>
+            (block.revealed && !block.mine) || (block.flagged && block.mine),
+        )
+      ) {
+        if (gameStatus === "play") gameState.gameStatus = "won";
+      } else {
+        if (gameStatus === "play") setTimeout(() => alert("You cheat"));
+      }
+    } else {
+      gameState.gameStatus = "play";
+    }
+  }
+
   // 点击
   onClick = (block: BlockState) => {
     const { gameState } = this;
     const { board } = gameState;
-    if (gameState.gameStatus !== "play" && gameState.gameStatus !== "ready") return;
+    if (gameState.gameStatus !== "play" && gameState.gameStatus !== "ready")
+      return;
     const { y, x } = block;
     if (board[y][x].flagged) return;
     if (board[y][x].mine) {
@@ -166,6 +197,13 @@ class MSGame extends EventBus<Events> {
     if (gameStatus !== "play") return;
     const { y, x } = block;
     board[y][x].flagged = true;
+    this.setGameState();
+  };
+
+  // toggle dev
+  toggleDev = () => {
+    const { gameState } = this;
+    gameState.isDev = !gameState.isDev;
     this.setGameState();
   };
 

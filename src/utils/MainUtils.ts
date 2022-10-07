@@ -1,8 +1,8 @@
 import type { MutableRefObject } from "react";
 import produce from "immer";
-import type { BlockArea, BlockState } from "@/types";
-import { GameStateRef } from "@/types";
-import { DIRECTIONS } from "@/constants/constants";
+import type { BlockArea, BlockState } from "~/types";
+import { GameStateRef } from "~/types";
+import { DIRECTIONS } from "~/constants/constants";
 
 // 初始化 state
 function initState(blockArea: BlockArea) {

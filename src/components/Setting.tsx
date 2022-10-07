@@ -1,12 +1,12 @@
 import type { Dispatch, MouseEvent, SetStateAction } from "react";
-import type { BlockArea } from "@/types";
+import type { BlockArea } from "~/types";
 
 interface ISetting {
-  changeBlockArea: (x: number, y: number) => void
-  changeMines: (count: number) => void
-  setIsShowSetting: Dispatch<SetStateAction<boolean>>
-  blockArea: BlockArea
-  mines: number
+  changeBlockArea: (x: number, y: number) => void;
+  changeMines: (count: number) => void;
+  setIsShowSetting: Dispatch<SetStateAction<boolean>>;
+  blockArea: BlockArea;
+  mines: number;
 }
 
 function Setting({
@@ -22,7 +22,7 @@ function Setting({
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-slate-400/50"
-      onClick={e => closeSetting(e)}
+      onClick={(e) => closeSetting(e)}
     >
       <div className="relative flex h-80 w-80 flex-col items-center justify-center gap-y-3 rounded-xl bg-teal-600/20">
         <button

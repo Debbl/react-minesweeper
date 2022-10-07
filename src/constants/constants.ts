@@ -1,4 +1,4 @@
-import type { BlockArea } from "@/types";
+import type { BlockArea } from "~/types";
 
 const BLOCK_AREA: BlockArea = {
   width: 9,

@@ -20,13 +20,11 @@ function Footer() {
     <div className="flex justify-center gap-x-3 text-2xl">
       <div>
         <button onClick={() => setIsDark(!isDark)}>
-          {isDark
-            ? (
+          {isDark ? (
             <IoMdMoon className="hover:cursor-pointer" />
-              )
-            : (
+          ) : (
             <RiSunFill />
-              )}
+          )}
         </button>
       </div>
       <div>
