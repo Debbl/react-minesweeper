@@ -168,7 +168,7 @@ class MSGame extends EventBus<Events> {
     const { board, gameStatus } = this.gameState;
     if (gameStatus !== "play") return;
     const { y, x } = block;
-    board[y][x].flagged = true;
+    if (!board[y][x].revealed) board[y][x].flagged = !board[y][x].flagged;
     this.setGameState();
   };
 
