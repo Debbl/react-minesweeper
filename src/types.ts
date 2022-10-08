@@ -21,4 +21,6 @@ export interface GameState {
   boardArea: BoardArea;
   mineGenerated: boolean;
   gameStatus: GameStatus;
+  startMS: number;
+  endMS: number;
 }

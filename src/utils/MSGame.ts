@@ -101,20 +101,20 @@ class MSGame extends EventBus<Events> {
     const { gameState } = this;
     const { board, gameStatus } = this.gameState;
     const blocks = board.flat();
-
-    if (blocks.every((block) => block.revealed || block.flagged)) {
+    if (blocks.every((block) => block.revealed || block.flagged) || gameStatus === "lost") {
       if (
         blocks.every(
           (block) =>
             (block.revealed && !block.mine) || (block.flagged && block.mine),
         )
       ) {
-        if (gameStatus === "play") gameState.gameStatus = "won";
+        if (gameStatus === "play") {
+          gameState.gameStatus = "won";
+          gameState.endMS = new Date().getTime();
+        }
       } else {
         if (gameStatus === "play") setTimeout(() => alert("You cheat"));
       }
-    } else {
-      gameState.gameStatus = "play";
     }
   }
 
@@ -137,10 +137,12 @@ class MSGame extends EventBus<Events> {
       setTimeout(() => {
         alert("BOOM!");
       });
+      gameState.endMS = new Date().getTime();
       gameState.gameStatus = "lost";
       this.showAllBlock();
     }
     if (!gameState.mineGenerated) {
+      gameState.startMS = new Date().getTime();
       this.generateMines({ x: block.x, y: block.y });
       this.updateNumber();
       gameState.gameStatus = "play";

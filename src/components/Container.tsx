@@ -5,6 +5,7 @@ import eyeIcon from "@iconify/icons-akar-icons/eye";
 import eyeClosed from "@iconify/icons-akar-icons/eye-closed";
 import Block from "./Block";
 import Confetti from "./Confetti";
+import Timer from "./Timer";
 import MSGame from "~/utils/MSGame";
 import { initState } from "~/utils/MainUtils";
 import { BOARD_AREA, MINES } from "~/constants/constants";
@@ -18,14 +19,16 @@ function Container() {
         board: initState(BOARD_AREA),
         isDev: true,
         boardArea: BOARD_AREA,
-        gameStatus: "play",
+        gameStatus: "ready",
         mineGenerated: false,
         mines: MINES,
+        startMS: new Date().getTime(),
+        endMS: new Date().getTime(),
       },
     },
   );
   const { current: msGame } = useRef(new MSGame(gameState));
-  const { board, isDev, mines, gameStatus } = gameState;
+  const { board, isDev, mines, gameStatus, startMS, endMS } = gameState;
   const mineCount
     = mines - board.flat().reduce((a, b) => a + (b.flagged ? 1 : 0), 0);
   useEffect(() => {
@@ -44,12 +47,15 @@ function Container() {
           <button className="btn" onClick={() => msGame.changeMode("medium")}>中等</button>
           <button className="btn" onClick={() => msGame.changeMode("hard")}>困难</button>
         </div>
-        <div className="flex w-full justify-evenly">
-          <div className="flex w-16 items-center justify-between text-3xl">
+        <div className="flex w-full justify-evenly text-3xl">
+          <div className="flex w-16 items-center justify-between">
             <Icon icon="mdi:mine" />
             <span className="w-8">{mineCount}</span>
           </div>
-          <div className="flex items-center text-3xl" onClick={msGame.toggleDev}>
+          <div className="flex w-16 items-center">
+            <Timer startMS={startMS} endMS={endMS} gameStatus={gameStatus} />
+          </div>
+          <div className="flex cursor-pointer items-center" onClick={msGame.toggleDev}>
             {isDev ? (
               <Icon icon={eyeClosed} />
             ) : (
@@ -58,7 +64,7 @@ function Container() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="mt-6 flex flex-col">
         {board.map((rows, y) => (
           <div className="flex" key={y}>
             {rows.map((block, x) => (

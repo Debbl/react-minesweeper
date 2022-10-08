@@ -21,13 +21,13 @@ function getBlockClassName(block: BlockState) {
   return block.mine ? "bg-red-500/50" : numberColors[block.adjacentMines];
 }
 
-interface BlockType {
+interface BlockProps {
   onClick: (block: BlockState) => void;
   onContextMenu: (e: MouseEvent, block: BlockState) => void;
   isDev: boolean;
   block: BlockState;
 }
-function Block(props: BlockType) {
+function Block(props: BlockProps) {
   const { block, onClick, onContextMenu, isDev } = props;
   return (
     <>
