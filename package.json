@@ -23,6 +23,7 @@
     "@iconify-icon/react": "^1.0.0",
     "@iconify/icons-akar-icons": "^1.2.9",
     "@iconify/icons-carbon": "^1.2.10",
+    "@iconify/icons-mdi": "^1.2.31",
     "@types/canvas-confetti": "^1.4.3",
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.17",

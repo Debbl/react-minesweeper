@@ -5,6 +5,7 @@ specifiers:
   '@iconify-icon/react': ^1.0.0
   '@iconify/icons-akar-icons': ^1.2.9
   '@iconify/icons-carbon': ^1.2.10
+  '@iconify/icons-mdi': ^1.2.31
   '@types/canvas-confetti': ^1.4.3
   '@types/node': ^18.7.18
   '@types/react': ^18.0.17
@@ -47,6 +48,7 @@ devDependencies:
   '@iconify-icon/react': 1.0.0_react@18.2.0
   '@iconify/icons-akar-icons': 1.2.9
   '@iconify/icons-carbon': 1.2.10
+  '@iconify/icons-mdi': 1.2.31
   '@types/canvas-confetti': 1.4.3
   '@types/node': 18.7.18
   '@types/react': 18.0.20
@@ -455,6 +457,12 @@ packages:
 
   /@iconify/icons-carbon/1.2.10:
     resolution: {integrity: sha512-xQgwa0Bzi+5s6t/CMbSeJpiLZ4af23wlsn25HseRMqtbdtrvdXCo9xN+5gX2frcZ5mqxHDrToL0zjGevrtxkNA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify/icons-mdi/1.2.31:
+    resolution: {integrity: sha512-/F9YDLpXXTicI2WOw5lqucNt4xoLH/yBOo35MJloCUTSmWENQIQcI72a3pEG5qUHyEkonhZVGZPRXfyyfd5e9w==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

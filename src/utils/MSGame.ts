@@ -73,6 +73,7 @@ class MSGame extends EventBus<Events> {
       let placed = false;
       while (!placed) placed = placeRandom(board);
     });
+    this.updateNumber();
   }
 
   // 递归打开格子
@@ -144,7 +145,6 @@ class MSGame extends EventBus<Events> {
     if (!gameState.mineGenerated) {
       gameState.startMS = new Date().getTime();
       this.generateMines({ x: block.x, y: block.y });
-      this.updateNumber();
       gameState.gameStatus = "play";
       gameState.mineGenerated = true;
     }

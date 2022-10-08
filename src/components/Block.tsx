@@ -1,5 +1,7 @@
-import { GiStarProminences, RiFlagFill } from "react-icons/all";
+import mineIcon from "@iconify/icons-mdi/mine";
 import type { MouseEvent } from "react";
+import { Icon } from "@iconify-icon/react";
+import { RiFlagFill } from "react-icons/ri";
 import type { BlockState } from "~/types";
 // 数字的样式
 const numberColors = [
@@ -41,7 +43,7 @@ function Block(props: BlockProps) {
         {block.flagged ? (
           <RiFlagFill className="text-red-700" />
         ) : block.mine ? (
-          (block.revealed || isDev) && <GiStarProminences />
+          (block.revealed || isDev) && <Icon icon={mineIcon} />
         ) : (
           (block.revealed || isDev) && block.adjacentMines
         )}

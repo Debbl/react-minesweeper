@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { Icon } from "@iconify-icon/react";
 import eyeIcon from "@iconify/icons-akar-icons/eye";
 import eyeClosed from "@iconify/icons-akar-icons/eye-closed";
+import mineIcon from "@iconify/icons-mdi/mine";
 import Block from "./Block";
 import Confetti from "./Confetti";
 import Timer from "./Timer";
@@ -49,7 +50,7 @@ function Container() {
         </div>
         <div className="flex w-full justify-evenly text-3xl">
           <div className="flex w-16 items-center justify-between">
-            <Icon icon="mdi:mine" />
+            <Icon icon={mineIcon} />
             <span className="w-8">{mineCount}</span>
           </div>
           <div className="flex w-16 items-center">
