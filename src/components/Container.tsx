@@ -18,7 +18,7 @@ function Container() {
     {
       defaultValue: {
         board: initState(BOARD_AREA),
-        isDev: true,
+        isDev: false,
         boardArea: BOARD_AREA,
         gameStatus: "ready",
         mineGenerated: false,
