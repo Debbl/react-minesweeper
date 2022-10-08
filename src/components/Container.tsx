@@ -1,6 +1,8 @@
 import { useLocalStorageState } from "ahooks";
 import { useEffect, useRef } from "react";
 import { Icon } from "@iconify-icon/react";
+import eyeIcon from "@iconify/icons-akar-icons/eye";
+import eyeClosed from "@iconify/icons-akar-icons/eye-closed";
 import Block from "./Block";
 import Confetti from "./Confetti";
 import MSGame from "~/utils/MSGame";
@@ -49,9 +51,9 @@ function Container() {
           </div>
           <div className="flex items-center text-3xl" onClick={msGame.toggleDev}>
             {isDev ? (
-              <Icon icon="akar-icons:eye-closed" />
+              <Icon icon={eyeClosed} />
             ) : (
-              <Icon icon="akar-icons:eye" />
+              <Icon icon={eyeIcon} />
             )}
           </div>
         </div>
