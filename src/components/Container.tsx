@@ -26,12 +26,12 @@ function Container() {
         startMS: new Date().getTime(),
         endMS: new Date().getTime(),
       },
-    },
+    }
   );
   const { current: msGame } = useRef(new MSGame(gameState));
   const { board, isDev, mines, gameStatus, startMS, endMS } = gameState;
-  const mineCount
-    = mines - board.flat().reduce((a, b) => a + (b.flagged ? 1 : 0), 0);
+  const mineCount =
+    mines - board.flat().reduce((a, b) => a + (b.flagged ? 1 : 0), 0);
   useEffect(() => {
     return msGame.on("change", setGameState);
   }, []);
@@ -44,9 +44,15 @@ function Container() {
           <button className="btn" onClick={msGame.reset}>
             新游戏
           </button>
-          <button className="btn" onClick={() => msGame.changeMode("easy")}>简单</button>
-          <button className="btn" onClick={() => msGame.changeMode("medium")}>中等</button>
-          <button className="btn" onClick={() => msGame.changeMode("hard")}>困难</button>
+          <button className="btn" onClick={() => msGame.changeMode("easy")}>
+            简单
+          </button>
+          <button className="btn" onClick={() => msGame.changeMode("medium")}>
+            中等
+          </button>
+          <button className="btn" onClick={() => msGame.changeMode("hard")}>
+            困难
+          </button>
         </div>
         <div className="flex w-full justify-evenly text-3xl">
           <div className="flex w-16 items-center justify-between">
@@ -56,12 +62,11 @@ function Container() {
           <div className="flex w-16 items-center">
             <Timer startMS={startMS} endMS={endMS} gameStatus={gameStatus} />
           </div>
-          <div className="flex cursor-pointer items-center" onClick={msGame.toggleDev}>
-            {isDev ? (
-              <Icon icon={eyeClosed} />
-            ) : (
-              <Icon icon={eyeIcon} />
-            )}
+          <div
+            className="flex cursor-pointer items-center"
+            onClick={msGame.toggleDev}
+          >
+            {isDev ? <Icon icon={eyeClosed} /> : <Icon icon={eyeIcon} />}
           </div>
         </div>
       </div>

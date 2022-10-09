@@ -1,8 +1,8 @@
 module.exports = {
-  extends: ["@debbl/eslint-config-react", "plugin:tailwindcss/recommended"],
+  extends: [
+    "@debbl/eslint-config-react",
+    "plugin:tailwindcss/recommended",
+    "@debbl/eslint-config-prettier",
+  ],
   plugins: ["tailwindcss"],
-  rules: {
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
-  },
 };

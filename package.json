@@ -19,6 +19,7 @@
     "react-icons": "^4.4.0"
   },
   "devDependencies": {
+    "@debbl/eslint-config-prettier": "^0.0.17",
     "@debbl/eslint-config-react": "0.0.15",
     "@iconify-icon/react": "^1.0.0",
     "@iconify/icons-akar-icons": "^1.2.9",

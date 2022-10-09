@@ -1,5 +1,6 @@
 import Footer from "./components/Footer";
 import Container from "./components/Container";
+import Ranking from "./components/Ranking";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <div className="inline-block">
         <Container />
         <Footer />
+        <Ranking />
       </div>
     </div>
   );
