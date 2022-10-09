@@ -12,12 +12,8 @@ jobs:
         uses: actions/setup-node@v2.5.1
         with:
           node-version: '16.x'
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: latest
-      - name: install
-        run: pnpm i
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
       - name: build
         run: pnpm build
       - name: Deploy
