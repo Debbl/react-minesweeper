@@ -1,14 +1,25 @@
-import data from "~/data/rank-list";
+import { useEffect, useState } from "react";
+import RankItem from "./RankItem";
+import type { RankingListData } from "~/services/getRankingList";
+import getRankingList from "~/services/getRankingList";
 
 function Ranking() {
-  const RankList = data;
+  const [rankingList, setRankingList] = useState<RankingListData>();
+  useEffect(() => {
+    getRankingList().then((response) => {
+      setRankingList({ ...response, data: response.data.reverse() });
+    });
+  }, []);
   return (
-    <div>
-      <div>排行榜</div>
+    <div className="mx-auto max-w-2xl">
+      <div className="mb-3">排行榜</div>
       <ul>
-        {RankList.data.map((record) => (
-          <li key={record.recordId}>{record.fields.username}</li>
-        ))}
+        <RankItem />
+        {rankingList?.data.reverse().map((record) => {
+          return (
+            <RankItem key={record.recordId} userRankInfo={record.fields} />
+          );
+        })}
       </ul>
     </div>
   );

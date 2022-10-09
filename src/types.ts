@@ -11,7 +11,7 @@ export interface BoardArea {
   height: number;
 }
 
-export type GameStatus = "ready" | "play" | "won" | "lost";
+export type GameStatus = "ready" | "play" | "won" | "lost" | "submitted";
 export type Mode = "easy" | "medium" | "hard";
 
 export interface GameState {
@@ -21,6 +21,7 @@ export interface GameState {
   boardArea: BoardArea;
   mineGenerated: boolean;
   gameStatus: GameStatus;
+  mode: Mode;
   startMS: number;
   endMS: number;
 }

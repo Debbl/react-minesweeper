@@ -10,11 +10,8 @@ function Footer() {
   });
   useEffect(() => {
     const htmlEl = document.getElementsByTagName("html")[0];
-    if (isDark)
-      htmlEl.classList.add("dark");
-
-    else
-      htmlEl.classList.remove("dark");
+    if (isDark) htmlEl.classList.add("dark");
+    else htmlEl.classList.remove("dark");
   }, [isDark]);
   return (
     <div className="flex justify-center gap-x-3 text-2xl">
