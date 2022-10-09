@@ -3,6 +3,7 @@ import EventBus from "./EventBus";
 import { initState, randomRange } from "./MainUtils";
 import { DIRECTIONS } from "~/constants/constants";
 import type { BlockState, GameState, Mode } from "~/types";
+import postUserInfo from "~/services/postUserInfo";
 
 interface Events {
   change: GameState;
@@ -54,15 +55,15 @@ class MSGame extends EventBus<Events> {
   }
 
   // 生成炸弹
-  protected generateMines(initial: { y: number; x: number; }) {
+  protected generateMines(initial: { y: number; x: number }) {
     const { boardArea, mines, board } = this.gameState;
     const placeRandom = (state: BlockState[][]) => {
       const cx = randomRange(0, boardArea.width - 1);
       const cy = randomRange(0, boardArea.height - 1);
       const block = state[cy][cx];
       if (
-        Math.abs(initial.x - block.x) <= 1
-        && Math.abs(initial.y - block.y) <= 1
+        Math.abs(initial.x - block.x) <= 1 &&
+        Math.abs(initial.y - block.y) <= 1
       )
         return false;
       if (block.mine) return false;
@@ -102,11 +103,14 @@ class MSGame extends EventBus<Events> {
     const { gameState } = this;
     const { board, gameStatus } = this.gameState;
     const blocks = board.flat();
-    if (blocks.every((block) => block.revealed || block.flagged) || gameStatus === "lost") {
+    if (
+      blocks.every((block) => block.revealed || block.flagged) ||
+      gameStatus === "lost"
+    ) {
       if (
         blocks.every(
           (block) =>
-            (block.revealed && !block.mine) || (block.flagged && block.mine),
+            (block.revealed && !block.mine) || (block.flagged && block.mine)
         )
       ) {
         if (gameStatus === "play") {
@@ -172,6 +176,7 @@ class MSGame extends EventBus<Events> {
 
   // 改变模式
   changeMode = (mode: Mode) => {
+    this.gameState.mode = mode;
     switch (mode) {
       case "easy":
         this.changeBoard(9, 9, 10);
@@ -189,6 +194,20 @@ class MSGame extends EventBus<Events> {
   // 新游戏
   reset = () => {
     this.initBoard();
+    this.setGameState();
+  };
+
+  // 提交
+  submit: (username: string | undefined) => void = (username = "匿名") => {
+    const { gameState } = this;
+    const { endMS, startMS, mode } = gameState;
+    gameState.gameStatus = "submitted";
+    postUserInfo({
+      username,
+      time: Math.floor((endMS - startMS) / 1000),
+      mode,
+      uploadTime: +new Date(),
+    });
     this.setGameState();
   };
 }
