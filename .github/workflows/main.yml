@@ -28,4 +28,4 @@ jobs:
           exclude_assets: '.github,.nojekyll'
           publish_branch: main
           publish_dir: dist
-          destination_dir: minesweeper
+          destination_dir: pages/minesweeper
