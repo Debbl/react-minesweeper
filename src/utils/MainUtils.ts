@@ -11,8 +11,8 @@ function initState(boardArea: BoardArea) {
         y,
         adjacentMines: 0,
         revealed: false,
-      }),
-    ),
+      })
+    )
   );
 }
 
@@ -20,8 +20,4 @@ function randomRange(min: number, max: number) {
   return Math.round(Math.random() * (max - min) + min);
 }
 
-export {
-  initState,
-  randomRange,
-};
-
+export { initState, randomRange };

@@ -11,7 +11,9 @@ interface TimerProps {
   gameStatus: GameStatus;
 }
 function Timer({ startMS, endMS, gameStatus }: TimerProps) {
-  const [timerCount, setTimerCount] = useState(Math.floor((endMS - startMS) / 1000));
+  const [timerCount, setTimerCount] = useState(
+    Math.floor((endMS - startMS) / 1000)
+  );
   useEffect(() => {
     switch (gameStatus) {
       case "won":
@@ -29,6 +31,7 @@ function Timer({ startMS, endMS, gameStatus }: TimerProps) {
         break;
     }
     return () => clearInterval(intervalID);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameStatus]);
   return (
     <>

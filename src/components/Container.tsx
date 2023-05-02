@@ -30,12 +30,13 @@ function Container() {
       },
     }
   );
-  const { current: msGame } = useRef(new MSGame(gameState));
-  const { board, isDev, mines, gameStatus, startMS, endMS } = gameState;
+  const { current: msGame } = useRef(new MSGame(gameState!));
+  const { board, isDev, mines, gameStatus, startMS, endMS } = gameState!;
   const mineCount =
     mines - board.flat().reduce((a, b) => a + (b.flagged ? 1 : 0), 0);
   useEffect(() => {
     return msGame.on("change", setGameState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="inline-flex select-none flex-col items-center gap-2 p-8">

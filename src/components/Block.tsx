@@ -35,7 +35,7 @@ function Block(props: BlockProps) {
     <>
       <button
         className={`m-[1px] flex h-8 w-8 items-center justify-center border ${getBlockClassName(
-          block,
+          block
         )}`}
         onClick={() => onClick(block)}
         onContextMenu={(e) => onContextMenu(e, block)}

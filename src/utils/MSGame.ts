@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import type { MouseEvent } from "react";
 import EventBus from "./EventBus";
 import { initState, randomRange } from "./MainUtils";
