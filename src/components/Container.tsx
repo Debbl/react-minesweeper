@@ -28,7 +28,7 @@ function Container() {
         startMS: new Date().getTime(),
         endMS: new Date().getTime(),
       },
-    }
+    },
   );
   const { current: msGame } = useRef(new MSGame(gameState!));
   const { board, isDev, mines, gameStatus, startMS, endMS } = gameState!;

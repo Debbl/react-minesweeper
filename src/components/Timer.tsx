@@ -12,7 +12,7 @@ interface TimerProps {
 }
 function Timer({ startMS, endMS, gameStatus }: TimerProps) {
   const [timerCount, setTimerCount] = useState(
-    Math.floor((endMS - startMS) / 1000)
+    Math.floor((endMS - startMS) / 1000),
   );
   useEffect(() => {
     switch (gameStatus) {

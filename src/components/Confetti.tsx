@@ -1,5 +1,6 @@
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
+
 function Confetti({ passed }: { passed: boolean }) {
   const congrats = () => {
     const defaults = {

@@ -11,8 +11,8 @@ function initState(boardArea: BoardArea) {
         y,
         adjacentMines: 0,
         revealed: false,
-      })
-    )
+      }),
+    ),
   );
 }
 

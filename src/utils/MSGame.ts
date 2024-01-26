@@ -111,7 +111,7 @@ class MSGame extends EventBus<Events> {
       if (
         blocks.every(
           (block) =>
-            (block.revealed && !block.mine) || (block.flagged && block.mine)
+            (block.revealed && !block.mine) || (block.flagged && block.mine),
         )
       ) {
         if (gameStatus === "play") {

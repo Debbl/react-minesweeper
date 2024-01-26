@@ -3,6 +3,7 @@ import type { MouseEvent } from "react";
 import { Icon } from "@iconify-icon/react";
 import { RiFlagFill } from "react-icons/ri";
 import type { BlockState } from "~/types";
+
 // 数字的样式
 const numberColors = [
   "text-transparent",
@@ -34,7 +35,7 @@ function Block(props: BlockProps) {
   return (
     <>
       <button
-        className={`m-[1px] flex h-8 w-8 items-center justify-center border ${getBlockClassName(
+        className={`m-[1px] flex size-8 items-center justify-center border ${getBlockClassName(
           block
         )}`}
         onClick={() => onClick(block)}
