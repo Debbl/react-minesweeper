@@ -7,9 +7,11 @@ function SubmitForm({
   submit: (username: string | undefined) => void;
 }) {
   const [username, setUsername] = useState<string>();
+
   const submitClick = () => {
     submit(username);
   };
+
   return (
     <div className="fixed inset-0 m-auto flex h-44 w-80 flex-col items-center justify-evenly rounded-lg border bg-black/50">
       <div className="text-2xl font-bold text-teal-700">提交排行</div>

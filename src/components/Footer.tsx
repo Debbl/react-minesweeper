@@ -8,11 +8,13 @@ function Footer() {
   const [isDark, setIsDark] = useLocalStorageState("minesweeper-isDark", {
     defaultValue: false,
   });
+
   useEffect(() => {
     const htmlEl = document.getElementsByTagName("html")[0];
     if (isDark) htmlEl.classList.add("dark");
     else htmlEl.classList.remove("dark");
   }, [isDark]);
+
   return (
     <div className="flex justify-center gap-x-3 text-2xl">
       <div>

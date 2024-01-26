@@ -1,7 +1,9 @@
+import type { Mode } from "~/types";
+
 interface UserRankInfo {
   username: string;
   time: number;
-  mode: "easy" | "medium" | "hard";
+  mode: Mode;
   uploadTime: number;
 }
 interface RankItemProps {
@@ -16,17 +18,15 @@ function formatTime(timeStamp: number) {
   const Hours = String(time.getHours()).padStart(2, "0");
   const Mins = String(time.getMinutes()).padStart(2, "0");
   const Seconds = String(time.getSeconds()).padStart(2, "0");
+
   return `${Year.slice(-2)}/${Month}/${Day} ${Hours}:${Mins}:${Seconds}`;
 }
 
 function RankItem({ userRankInfo }: RankItemProps) {
-  let username, mode, time, uploadTime;
-  if (userRankInfo) {
-    username = userRankInfo.username;
-    mode = userRankInfo.mode;
-    time = userRankInfo.time;
-    uploadTime = userRankInfo.uploadTime;
-  }
+  if (!userRankInfo) return;
+
+  const { username, mode, time, uploadTime } = userRankInfo;
+
   return (
     <div className="flex justify-center gap-x-2">
       <span className="w-24">{username || "姓名"}</span>
@@ -38,4 +38,5 @@ function RankItem({ userRankInfo }: RankItemProps) {
     </div>
   );
 }
+
 export default RankItem;

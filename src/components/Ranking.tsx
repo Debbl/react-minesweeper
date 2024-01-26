@@ -5,11 +5,13 @@ import getRankingList from "~/services/getRankingList";
 
 function Ranking() {
   const [rankingList, setRankingList] = useState<RankingListData>();
+
   useEffect(() => {
     getRankingList().then((response) => {
       setRankingList({ ...response, data: response.data.reverse() });
     });
   }, []);
+
   return (
     <div className="mx-auto max-w-2xl">
       <div className="mb-3">排行榜</div>

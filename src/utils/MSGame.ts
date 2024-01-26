@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import type { MouseEvent } from "react";
 import EventBus from "./EventBus";
 import { initState, randomRange } from "./MainUtils";
@@ -25,8 +24,10 @@ class MSGame extends EventBus<Events> {
   // 初始化棋盘
   protected initBoard() {
     const { gameState } = this;
+
     gameState.mineGenerated = false;
     gameState.gameStatus = "ready";
+
     this.gameState.board = initState(this.gameState.boardArea);
   }
 
@@ -34,6 +35,7 @@ class MSGame extends EventBus<Events> {
   protected getSiblings(block: BlockState) {
     const { width, height } = this.gameState.boardArea;
     const { board } = this.gameState;
+
     return DIRECTIONS.map(([dx, dy]) => {
       const x2 = block.x + dx;
       const y2 = block.y + dy;
@@ -45,6 +47,7 @@ class MSGame extends EventBus<Events> {
   // 更新格子周围的炸弹数
   protected updateNumber() {
     const { board } = this.gameState;
+
     board.forEach((rows) => {
       rows.forEach((block) => {
         if (block.mine) return;
@@ -71,16 +74,19 @@ class MSGame extends EventBus<Events> {
       block.mine = true;
       return true;
     };
+
     Array.from({ length: mines }).forEach(() => {
       let placed = false;
       while (!placed) placed = placeRandom(board);
     });
+
     this.updateNumber();
   }
 
   // 递归打开格子
   protected expendZero(block: BlockState) {
     if (block.adjacentMines) return;
+
     this.getSiblings(block).forEach((otherBlock) => {
       if (!otherBlock.revealed && !otherBlock.flagged) {
         otherBlock.revealed = true;
@@ -92,6 +98,7 @@ class MSGame extends EventBus<Events> {
   // 显示所有炸弹格子
   protected showAllBlock() {
     const { board } = this.gameState;
+
     board.forEach((rows) => {
       rows.forEach((block) => {
         if (block.mine) block.revealed = true;
@@ -119,6 +126,7 @@ class MSGame extends EventBus<Events> {
           gameState.endMS = new Date().getTime();
         }
       } else {
+        // eslint-disable-next-line no-alert
         if (gameStatus === "play") setTimeout(() => alert("You cheat"));
       }
     }
@@ -134,26 +142,32 @@ class MSGame extends EventBus<Events> {
   // 点击
   onClick = (block: BlockState) => {
     const { gameState } = this;
-    const { board } = gameState;
     if (gameState.gameStatus !== "play" && gameState.gameStatus !== "ready")
       return;
+
+    const { board } = gameState;
     const { y, x } = block;
     if (board[y][x].flagged) return;
+
     if (board[y][x].mine) {
       setTimeout(() => {
+        // eslint-disable-next-line no-alert
         alert("BOOM!");
       });
       gameState.endMS = new Date().getTime();
       gameState.gameStatus = "lost";
       this.showAllBlock();
     }
+
     if (!gameState.mineGenerated) {
       gameState.startMS = new Date().getTime();
       this.generateMines({ x: block.x, y: block.y });
       gameState.gameStatus = "play";
       gameState.mineGenerated = true;
     }
+
     board[y][x].revealed = true;
+
     this.expendZero(block);
     this.setGameState();
   };
@@ -161,10 +175,13 @@ class MSGame extends EventBus<Events> {
   // 右键点击
   onContextMenu = (e: MouseEvent, block: BlockState) => {
     e.preventDefault();
+
     const { board, gameStatus } = this.gameState;
     if (gameStatus !== "play") return;
+
     const { y, x } = block;
     if (!board[y][x].revealed) board[y][x].flagged = !board[y][x].flagged;
+
     this.setGameState();
   };
 
@@ -172,12 +189,14 @@ class MSGame extends EventBus<Events> {
   toggleDev = () => {
     const { gameState } = this;
     gameState.isDev = !gameState.isDev;
+
     this.setGameState();
   };
 
   // 改变模式
   changeMode = (mode: Mode) => {
     this.gameState.mode = mode;
+
     switch (mode) {
       case "easy":
         this.changeBoard(9, 9, 10);
@@ -189,6 +208,7 @@ class MSGame extends EventBus<Events> {
         this.changeBoard(16, 30, 99);
         break;
     }
+
     this.reset();
   };
 
@@ -203,6 +223,7 @@ class MSGame extends EventBus<Events> {
     const { gameState } = this;
     const { endMS, startMS, mode } = gameState;
     gameState.gameStatus = "submitted";
+
     postUserInfo({
       username,
       time: Math.floor((endMS - startMS) / 1000),
