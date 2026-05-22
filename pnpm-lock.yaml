@@ -21,8 +21,8 @@ importers:
         specifier: ^10.1.1
         version: 10.1.1
       lodash:
-        specifier: ^4.17.23
-        version: 4.17.23
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2090,8 +2090,8 @@ packages:
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
-  lodash@4.17.23:
-    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
@@ -4010,7 +4010,7 @@ snapshots:
       dayjs: 1.11.7
       intersection-observer: 0.12.2
       js-cookie: 2.2.1
-      lodash: 4.17.23
+      lodash: 4.18.1
       react: 18.3.1
       react-fast-compare: 3.2.2
       resize-observer-polyfill: 1.5.1
@@ -4792,7 +4792,7 @@ snapshots:
       debug: 4.3.4
       eslint: 8.57.0
       eslint-compat-utils: 0.5.1(eslint@8.57.0)
-      lodash: 4.17.23
+      lodash: 4.18.1
       toml-eslint-parser: 0.9.3
     transitivePeerDependencies:
       - supports-color
@@ -4855,7 +4855,7 @@ snapshots:
       debug: 4.3.4
       eslint: 8.57.0
       eslint-compat-utils: 0.5.1(eslint@8.57.0)
-      lodash: 4.17.23
+      lodash: 4.18.1
       natural-compare: 1.4.0
       yaml-eslint-parser: 1.2.3
     transitivePeerDependencies:
@@ -5461,7 +5461,7 @@ snapshots:
 
   lodash.merge@4.6.2: {}
 
-  lodash@4.17.23: {}
+  lodash@4.18.1: {}
 
   longest-streak@3.1.0: {}
 
@@ -6789,7 +6789,7 @@ snapshots:
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
       esquery: 1.5.0
-      lodash: 4.17.23
+      lodash: 4.18.1
       semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
@@ -6869,7 +6869,7 @@ snapshots:
   yaml-eslint-parser@1.2.3:
     dependencies:
       eslint-visitor-keys: 3.4.3
-      lodash: 4.17.23
+      lodash: 4.18.1
       yaml: 2.2.2
 
   yaml@2.2.2: {}
